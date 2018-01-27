@@ -52,14 +52,6 @@ public class GenerateWorld : MonoBehaviour {
         {
             vertices[i] += _meshfilter.mesh.normals[i] * ((Perlin.Noise(offset+vertices[i]* noisesScale) /255f)* roughness);
             
-            if(vertices[i].z<= 0.01&& vertices[i].z >= -0.01)
-            {
-                z_vertices.Add(vertices[i]);
-                zi++;
-                float height = CalculateHeight(vertices[i]);
-                if (height >= 0.5f && height < 2f)
-                    seaLevel_index.Add(zi);
-            }
         }
         _meshfilter.mesh.vertices = vertices;
         _meshfilter.mesh.RecalculateBounds();
@@ -118,8 +110,8 @@ public class GenerateWorld : MonoBehaviour {
     Vector3 CalculatePos(Vector3 vertex,GameObject go)
     {
         Vector3 pos = vertex;
-        pos.x *= transform.localScale.x + (go.transform.localScale.x / 2);
-        pos.y *= transform.localScale.y + (go.transform.localScale.y / 2);
+        pos.x *= transform.localScale.x;
+        pos.y *= transform.localScale.y;
         go.transform.position = pos;
         go.transform.up = pos;
         return pos;
