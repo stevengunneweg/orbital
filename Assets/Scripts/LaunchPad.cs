@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LaunchPad : MonoBehaviour {
     public delegate void BoughtSatelliteEvent(GameObject satelliteObject);
@@ -10,7 +11,7 @@ public class LaunchPad : MonoBehaviour {
     private Renderer launchpadRenderer;
     [SerializeField]
     private GameObject launchpadObject;
-    private float distanceToEarthsCrust = 2.5f;
+    private float distanceToEarthsCrust = 2.55f;
     private bool isActive = false;
     private bool isMoving = false;
     private bool isShooting = false;
@@ -20,6 +21,14 @@ public class LaunchPad : MonoBehaviour {
 	private float maxDrawingDistance = 2.0f;
 
     GameObject satObject = null;
+
+    public Vector3 CurrentTrajectoryStart
+    {
+        get
+        {
+            return launchpadObject.transform.position + launchpadObject.transform.position.normalized * 0.2f;
+        }
+    }
 
     private void Start()
     {
@@ -63,11 +72,11 @@ public class LaunchPad : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             trajectoryPositions = new List<Vector3>();
-            trajectoryPositions.Add(launchpadObject.transform.position + launchpadObject.transform.position.normalized * 0.2f);
+            trajectoryPositions.Add(CurrentTrajectoryStart);
             isShooting = true;
             isMoving = false;
         }
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButton(0)&& !EventSystem.current.IsPointerOverGameObject())
         {
             DrawTrajectory();
         }
@@ -138,7 +147,7 @@ public class LaunchPad : MonoBehaviour {
     {
 		// Set initial position
         if (trajectoryPositions.Count == 0) {
-            trajectoryPositions.Add(launchpadObject.transform.position);
+            trajectoryPositions.Add(CurrentTrajectoryStart);
         }
         if(CheckForClear())
         {

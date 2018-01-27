@@ -56,9 +56,13 @@
 			half mid = _MidDepth;
 			half max = _MaxDepth;
 			float t = (distance(_CentrePoint.xyz, IN.worldPos) - min) / (max - min);
+			float t2 = (distance(_CentrePoint.xyz, IN.worldPos) - min) / (mid - min);
+			float t3 = (distance(_CentrePoint.xyz, IN.worldPos) - mid) / (max - mid);
 
-			_Color = lerp(_LowColor, _MidColor, t*_Fade);
-			_Color += lerp(_MidColor, _HighColor, t*_Fade);
+			fixed4 lowColor = lerp(_LowColor, _MidColor, t2*_Fade);
+			fixed4 highColor = lerp(_MidColor, _HighColor, t3*_Fade);
+
+			_Color = lerp(lowColor, highColor, round(t));
 			// Albedo comes from a texture tinted by color
 			fixed4 c = tex2D(_MainTex, IN.uv2_MainTex) * _Color;
 			o.Albedo = c.rgb;

@@ -59,14 +59,14 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Fade: 1.9
+    - _Fade: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.797
     - _GlossyReflections: 1
-    - _MaxDepth: 2.2
+    - _MaxDepth: 2.689
     - _Metallic: 0
-    - _MidDepth: 1.99
-    - _MinDepth: 1.96
+    - _MidDepth: 2.494
+    - _MinDepth: 2.412
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -80,5 +80,5 @@ Material:
     - _Color: {r: 0, g: 1, b: 0.21379304, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighColor: {r: 0.15862082, g: 1, b: 0, a: 1}
-    - _LowColor: {r: 0, g: 0.04827571, b: 1, a: 1}
-    - _MidColor: {r: 0.94482756, g: 1, b: 0, a: 1}
+    - _LowColor: {r: 0, g: 0.042596214, b: 0.88235295, a: 1}
+    - _MidColor: {r: 0.16009127, g: 0.30147058, b: 0, a: 1}
