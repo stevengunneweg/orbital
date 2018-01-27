@@ -54,16 +54,9 @@ public class Satelite : MonoBehaviour
 		this.values.SetTeamId(teamId);
 	}
 
-    protected void Awake()
+    protected void Start()
     {
-        if(values == null)
-		    values = new SateliteValues(50, 0.5f, 0.05f);
         currentOrbitalVelocity = values.GetTrajectorySpeed();
-
-    }
-
-	protected void Start()
-    {
         if (OnCreated != null)
         {
             OnCreated(this);
