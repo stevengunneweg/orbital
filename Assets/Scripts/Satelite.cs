@@ -7,7 +7,7 @@ public class Satelite : MonoBehaviour {
     [SerializeField]
     SateliteValues values;
     int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
-    List<Vector3> launchRoute;
+    List<Vector3> launchRoute = new List<Vector3>();
     GameObject pivot;
 
     public void Spawn(List<Vector3> launchRoute)
@@ -34,6 +34,10 @@ public class Satelite : MonoBehaviour {
         if(launchRoute.Count != 0)
         {
             TravelToInitialDestination();
+            return;
+        }
+        if(pivot == null)
+        {
             return;
         }
         pivot.transform.Rotate(new Vector3(0, 0, this.values.GetOrbitalVelocity()*-1*turningDirection));
