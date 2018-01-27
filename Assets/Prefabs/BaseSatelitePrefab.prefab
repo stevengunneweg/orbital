@@ -25,8 +25,6 @@ GameObject:
   - component: {fileID: 114621983506263980}
   - component: {fileID: 50742797222169954}
   - component: {fileID: 58515917081142498}
-  - component: {fileID: 114245668391375044}
-  - component: {fileID: 114844919889857564}
   - component: {fileID: 120395349093519754}
   - component: {fileID: 114451380284197756}
   m_Layer: 0
@@ -206,21 +204,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114245668391375044
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1251501229717162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e66730398921764ba18b82929a9102a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  broadcastRadius: 32
-  signalType: 0
-  Planet: {fileID: 0}
-  line: {fileID: 120395349093519754}
 --- !u!114 &114375211566705186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -288,17 +271,6 @@ MonoBehaviour:
     cost: 0
     teamId: 0
   rocket: {fileID: 1278389138608238}
---- !u!114 &114844919889857564
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1251501229717162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9949d377616b9a444a47b5671df57306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!120 &120395349093519754
 LineRenderer:
   m_ObjectHideFlags: 1

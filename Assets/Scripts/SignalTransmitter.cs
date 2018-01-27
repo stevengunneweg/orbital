@@ -33,9 +33,7 @@ public class SignalTransmitter : MonoBehaviour
 
     public HashSet<Minion> ConnectedMinions { get; private set; }
 
-    [SerializeField]
     public double broadcastRadius = 20; //In degrees
-    [SerializeField]
     public SignalType signalType;
     public SignalType SignalType { get { return signalType; } }
     public Transform Planet;
