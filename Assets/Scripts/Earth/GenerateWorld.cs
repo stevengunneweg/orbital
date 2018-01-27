@@ -52,7 +52,14 @@ public class GenerateWorld : MonoBehaviour {
         {
             vertices[i] += _meshfilter.mesh.normals[i] * ((Perlin.Noise(offset+vertices[i]* noisesScale) /255f)* roughness);
             
-            if(vertices[i].z<= 0.01&& vertices[i].z >= -0.01)
+        }
+        _meshfilter.mesh.vertices = vertices;
+        _meshfilter.mesh.RecalculateBounds();
+
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            if (vertices[i].z <= 0.01 && vertices[i].z >= -0.01)
             {
                 z_vertices.Add(vertices[i]);
                 zi++;
@@ -61,8 +68,7 @@ public class GenerateWorld : MonoBehaviour {
                     seaLevel_index.Add(zi);
             }
         }
-        _meshfilter.mesh.vertices = vertices;
-        _meshfilter.mesh.RecalculateBounds();
+
         SpawnBuilding();
         SpawnPerson();
     }
@@ -71,10 +77,16 @@ public class GenerateWorld : MonoBehaviour {
     {
         foreach (Vector3 citypos in cityPos)
         {
-            GameObject go = Instantiate(_person);
-            Vector3 pos = citypos;
-            go.transform.position = pos- Vector3.forward * 0.25f;
-            go.transform.up = citypos;
+            for (int i = 0; i < 2+(Random.value*2); i++)
+            {
+                GameObject go = Instantiate(_person);
+                Vector3 pos = citypos;
+
+                Vector3 side = Vector3.Cross(citypos, Vector3.forward);
+                go.transform.position = pos+((side.normalized*0.2f)*(Random.value-0.5f)) - Vector3.forward * 0.15f;
+                go.transform.up = citypos;
+                go.transform.SetParent(transform);
+            }
         }
     }
     void SpawnBuilding()
@@ -87,6 +99,7 @@ public class GenerateWorld : MonoBehaviour {
                 Vector3 pos = CalculatePos(z_vertices[index], go);
                 go.transform.position = go.transform.position+Vector3.forward*0.5f;
                 cityPos.Add(pos);
+                go.transform.SetParent(transform);
 
             }
         }
@@ -99,8 +112,8 @@ public class GenerateWorld : MonoBehaviour {
     Vector3 CalculatePos(Vector3 vertex,GameObject go)
     {
         Vector3 pos = vertex;
-        pos.x *= transform.localScale.x + (go.transform.localScale.x / 2) - 0.2f;
-        pos.y *= transform.localScale.y + (go.transform.localScale.y / 2) - 0.2f;
+        pos.x *= transform.localScale.x;
+        pos.y *= transform.localScale.y;
         go.transform.position = pos;
         go.transform.up = pos;
         return pos;

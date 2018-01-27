@@ -4,20 +4,28 @@ using UnityEngine;
 using System.Linq;
 
 public class Population : MonoBehaviour {
+
+
     [SerializeField]
-    private Minion[] allMinions;
+    private List<Minion> allMinionsList;
     [SerializeField]
     private List<SignalTransmitter> signalTransmitters;
 
-    private void Start()
+
+    private void Awake()
     {
         signalTransmitters = new List<SignalTransmitter>();
+        allMinionsList = new List<Minion>();
         SignalTransmitter.OnCreated += AddSignalTransmitter;
         SignalTransmitter.OnDestroyed += RemoveSignalTransmitter;
-        foreach (var m in allMinions)
-        {
-            m.SetPopulation(this);
-        }
+        Minion.OnCreated += AddMinion;
+        Minion.OnDestroyed += RemoveMinion;
+    }
+
+
+    private void Start()
+    {
+        
     }
 
     private void OnDestroy()
@@ -28,7 +36,16 @@ public class Population : MonoBehaviour {
 
     public Minion[] GetAllMinions()
     {
-        return this.allMinions;
+        return allMinionsList.ToArray();
+    }
+    private void AddMinion(Minion minion)
+    {
+        minion.SetPopulation(this);
+        allMinionsList.Add(minion);
+    }
+    private void RemoveMinion(Minion minion)
+    {
+        allMinionsList.Remove(minion);
     }
 
     private void AddSignalTransmitter(SignalTransmitter st)
