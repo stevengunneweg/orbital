@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SignalReceiver : MonoBehaviour
+public class Minion : MonoBehaviour
 {
-    static List<SignalReceiver> instances = new List<SignalReceiver>();
-    public static List<SignalReceiver> Instances
+    static List<Minion> instances = new List<Minion>();
+    public static List<Minion> Instances
     {
         get
         {
             if (instances == null)
-                instances = new List<SignalReceiver>();
+                instances = new List<Minion>();
             return instances;
         }
     }
@@ -31,7 +31,6 @@ public class SignalReceiver : MonoBehaviour
         float connectionScore = 0;
         foreach (SignalType signalType in Enum.GetValues(typeof(SignalType)))
             connectionScore += calculateScore(signalType);
-        Score.Value += connectionScore;
     }
 
     // todo [KG] make the score calculation do fancy things
@@ -46,18 +45,18 @@ public class SignalReceiver : MonoBehaviour
     bool isConnected(SignalType signalType)
     {
         foreach (SignalTransmitter transmitter in SignalTransmitter.Instances[signalType])
-            if (transmitter.Receivers.Contains(this))
+            if (transmitter.ConnectedMinions.Contains(this))
                 return true;
         return false;
     }
 
-    HashSet<SignalReceiver> getConnections(SignalType signalType)
+    HashSet<Minion> getConnections(SignalType signalType)
     {
-        HashSet<SignalReceiver> connections = new HashSet<SignalReceiver>();
+        HashSet<Minion> connections = new HashSet<Minion>();
 
         foreach (SignalTransmitter signalTransmitter in SignalTransmitter.Instances[signalType])
-            if (signalTransmitter.Receivers.Contains(this))
-                foreach (SignalReceiver receiver in signalTransmitter.Receivers)
+            if (signalTransmitter.ConnectedMinions.Contains(this))
+                foreach (Minion receiver in signalTransmitter.ConnectedMinions)
                     if (!connections.Contains(receiver))
                         connections.Add(receiver);
 

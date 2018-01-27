@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public class LaunchPad : MonoBehaviour {
 
+    public delegate void BoughtSatelliteEvent(GameObject satelliteObject);
+    public event BoughtSatelliteEvent OnBoughtSatellite;
+
     [SerializeField]
     private Renderer launchpadRenderer;
 
@@ -11,14 +14,16 @@ public class LaunchPad : MonoBehaviour {
 
     private float distanceToEarthsCrust = 1.6f;
 
-    private bool isActive = true;
+    private bool isActive = false;
 
-    private bool isMoving = true;
+    private bool isMoving = false;
 
     private bool isShooting = false;
 
     [SerializeField]
     private LineRenderer lineRenderer;
+
+    GameObject satObject = null;
 
     private void Start()
     {
@@ -30,8 +35,9 @@ public class LaunchPad : MonoBehaviour {
         MenuHandler.OnBuySattelite -= BuySatellite;
     }
 
-    private void BuySatellite()
+    public void BuySatellite(GameObject satObject)
     {
+        this.satObject = satObject;
         isActive = true;
         isMoving = true;
     }
@@ -71,14 +77,23 @@ public class LaunchPad : MonoBehaviour {
         }
         if(isShooting)
         {
+            
             if(Input.GetMouseButtonUp(0))
             {
-                if (trajectoryPositions.Count > 1)
+                if (satObject != null)
                 {
-                    GameObject tempSat = SateliteFactory.FabricateDefaultSatelite();
-                    tempSat.GetComponent<Satelite>().Spawn(trajectoryPositions);
-                    tempSat.GetComponent<Satelite>().transform.Rotate(launchpadObject.transform.rotation.eulerAngles);
+                    if (trajectoryPositions.Count > 1)
+                    {
+                        //GameObject tempSat = SateliteFactory.FabricateDefaultSatelite();
+                        satObject.GetComponent<Satelite>().Spawn(trajectoryPositions);
+                        satObject.GetComponent<Satelite>().transform.Rotate(launchpadObject.transform.rotation.eulerAngles);
+                        if (OnBoughtSatellite != null)
+                            OnBoughtSatellite(satObject);
+
+                        satObject = null;
+                    }
                 }
+               
 
                 trajectoryPositions = new List<Vector3>();
                 Clear();

@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class MenuHandler : MonoBehaviour {
 
-    public delegate void BuySatelliteEvent();
+    public delegate void BuySatelliteEvent(GameObject satelliteObject);
     public static event BuySatelliteEvent OnBuySattelite;
+    
+
 	public void BuySatellite()
     {
         if (OnBuySattelite != null)
         {
-            OnBuySattelite();
+            OnBuySattelite(SateliteFactory.FabricateDefaultSatelite());
         }
     }
 }

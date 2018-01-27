@@ -5,6 +5,6 @@ using System.Text;
 
 public enum SignalType
 {
-    Internent
+    Internet
 }
 
