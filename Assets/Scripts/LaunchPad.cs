@@ -22,6 +22,14 @@ public class LaunchPad : MonoBehaviour {
 
     GameObject satObject = null;
 
+    public Vector3 CurrentTrajectoryStart
+    {
+        get
+        {
+            return launchpadObject.transform.position + launchpadObject.transform.position.normalized * 0.2f;
+        }
+    }
+
     private void Start()
     {
         MenuHandler.OnBuySattelite += BuySatellite;
@@ -64,7 +72,7 @@ public class LaunchPad : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             trajectoryPositions = new List<Vector3>();
-            trajectoryPositions.Add(launchpadObject.transform.position + launchpadObject.transform.position.normalized * 0.2f);
+            trajectoryPositions.Add(CurrentTrajectoryStart);
             isShooting = true;
             isMoving = false;
         }
@@ -125,7 +133,7 @@ public class LaunchPad : MonoBehaviour {
     {
 		// Set initial position
         if (trajectoryPositions.Count == 0) {
-            trajectoryPositions.Add(launchpadObject.transform.position);
+            trajectoryPositions.Add(CurrentTrajectoryStart);
         }
         if(CheckForClear())
         {
