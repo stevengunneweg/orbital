@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 23547652720804478}
   - component: {fileID: 114679113004895400}
   - component: {fileID: 114822800051511038}
-  - component: {fileID: 33094077885073638}
   m_Layer: 0
   m_Name: Earth
   m_TagString: Untagged
@@ -145,13 +144,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33094077885073638
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1042743979756114}
-  m_Mesh: {fileID: 0}
 --- !u!33 &33123497789328918
 MeshFilter:
   m_ObjectHideFlags: 1
