@@ -26,6 +26,11 @@ public class SateliteFactory : MonoBehaviour
     [Header("Base")]
     public GameObject sateliteBasePrefab;
 
+    [Header("Graphics")]
+    public GameObject graphics_satellite_att;
+    public GameObject graphics_satellite_def;
+    public GameObject graphics_satellite_gun;
+
     public static GameObject From(SatelliteType type, int teamId = defaultTeamId)
     {
         var _base = Base(teamId);
