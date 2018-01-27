@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        currentPlayer = new Player(5000);
+        currentPlayer = new Player(50);
        launchPad.OnBoughtSatellite += BuySatellite;
     }
 
