@@ -89,6 +89,21 @@ public class LaunchPad : MonoBehaviour {
                 {
                     if (trajectoryPositions.Count > 1)
                     {
+						// Find the direction of the last movement
+						Vector3 lastRouteCoordinate = trajectoryPositions[trajectoryPositions.Count - 1];
+						Vector3 secondLastRouteCoordinate = trajectoryPositions[trajectoryPositions.Count - 2];
+						// Find the direction of the cross product to know which direction the vector is going (down for CW or up for CCW).
+						Vector3 cross = Vector3.Cross(lastRouteCoordinate, secondLastRouteCoordinate);
+						int turningDirection = cross.z > 0 ? 1 : -1;
+
+						// Add 2 more nodes along flight path for a smooth transition
+						Vector3 lastPosition = trajectoryPositions[trajectoryPositions.Count - 1];
+						trajectoryPositions.Add(Quaternion.Euler(0, 0, turningDirection > 0 ? -1 : 1) * lastPosition);
+						trajectoryPositions.Add(Quaternion.Euler(0, 0, turningDirection > 0 ? -2 : 2) * lastPosition);
+
+						// Smoothen the drawn path
+						trajectoryPositions = MakeSmoothCurves(trajectoryPositions, 1.0f);
+
                         //GameObject tempSat = SateliteFactory.FabricateDefaultSatelite();
                         satObject.GetComponent<Satelite>().Spawn(trajectoryPositions);
                         satObject.GetComponent<Satelite>().transform.Rotate(launchpadObject.transform.rotation.eulerAngles);
@@ -98,7 +113,6 @@ public class LaunchPad : MonoBehaviour {
                         satObject = null;
                     }
                 }
-               
 
                 trajectoryPositions = new List<Vector3>();
                 Clear();
@@ -106,7 +120,7 @@ public class LaunchPad : MonoBehaviour {
                 isShooting = false;
                 isActive = false;
             }
-        }
+		}
     }
 
     private bool CheckForClear()
@@ -177,4 +191,42 @@ public class LaunchPad : MonoBehaviour {
     {
         launchpadObject.transform.position = GetMouseWorldPosition().normalized * distanceToEarthsCrust;
     }
+
+
+	// listToCurve is the original path
+	// smoothness is the number of interpolations
+	public List<Vector3> MakeSmoothCurves(List<Vector3> listToCurve, float smoothness) {
+		List<Vector3> points;
+		List<Vector3> curvedPoints;
+		int pointsLength = 0;
+		int curvedLength = 0;
+
+		if (smoothness < 1.0f) {
+			smoothness = 1.0f;
+		}
+
+		pointsLength = listToCurve.Count;
+
+		curvedLength = (pointsLength * Mathf.RoundToInt(smoothness)) - 1;
+		curvedPoints = new List<Vector3>(curvedLength);
+
+		float t = 0.0f;
+		for (int pointInTimeOnCurve = 0; pointInTimeOnCurve < curvedLength + 1; pointInTimeOnCurve++) {
+			t = Mathf.InverseLerp(0, curvedLength, pointInTimeOnCurve);
+
+			points = new List<Vector3>(listToCurve);
+
+			for (int j = pointsLength - 1; j > 0; j--) {
+				for (int i = 0; i < j; i++) {
+					points[i] = (1 - t) * points[i] + t * points[i + 1];
+				}
+			}
+
+			curvedPoints.Add(points[0]);
+		}
+		return curvedPoints;
+	}
+
+
+
 }
