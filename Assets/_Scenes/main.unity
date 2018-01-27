@@ -4016,6 +4016,7 @@ GameObject:
   - component: {fileID: 1531593530}
   - component: {fileID: 1531593529}
   - component: {fileID: 1531593531}
+  - component: {fileID: 1531593532}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4064,6 +4065,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allMinionsList: []
   signalTransmitters: []
+--- !u!114 &1531593532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1531593528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584217714241cd34db5000d7d8abf20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1606696233
 GameObject:
   m_ObjectHideFlags: 0
