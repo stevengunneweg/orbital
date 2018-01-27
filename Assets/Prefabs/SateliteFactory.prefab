@@ -59,6 +59,8 @@ MonoBehaviour:
     type: 2}
   graphics_satellite_trans: {fileID: 1864253495506212, guid: 6fc876057b8322f4f93765f09e443727,
     type: 2}
+  coneMaterial: {fileID: 2100000, guid: f4ad01f4549022149b216263c5d21b04, type: 2}
+  broadcastRadius: 15
   indestructableHealth: 99999
   railgunBulletPrefab: {fileID: 1639293868069558, guid: 483c568263f081442aa8c752969f2fc4,
     type: 2}
