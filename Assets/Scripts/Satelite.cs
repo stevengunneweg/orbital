@@ -26,9 +26,14 @@ public class Satelite : MonoBehaviour {
     public SateliteValues GetValues()
     {
         return this.values;
-    }
+	}
 
-    protected void Start()
+	public void SetTeamId(int teamId)
+	{
+		this.values.SetTeamId(teamId);
+	}
+
+    protected void Awake()
     {
 		values = new SateliteValues(10, 0.5f, 0.005f);
     }
