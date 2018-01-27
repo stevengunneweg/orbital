@@ -50,9 +50,9 @@ public class GenerateWorld : MonoBehaviour {
 
         float radius = 1f;
         // Longitude |||
-        int nbLong = 24*2;
+        int nbLong = 24*3;
         // Latitude ---
-        int nbLat = 16*2;
+        int nbLat = 16*3;
 
         #region Vertices
         Vector3[] vertices = new Vector3[(nbLong + 1) * nbLat + 2];
