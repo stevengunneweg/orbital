@@ -6,7 +6,6 @@ Shader "Unlit/TestShader"
 	{
 		//_MainTex ("Texture", 2D) = "white" {}
 		_Color("Color",Color) = (1,1,1,1)
-		_RColor("Right Color",Color) = (1,1,1,1)
 	}
 		SubShader
 	{
