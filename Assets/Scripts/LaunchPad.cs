@@ -1,24 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class LaunchPad : MonoBehaviour {
 
+public class LaunchPad : MonoBehaviour {
     [SerializeField]
     private Renderer launchpadRenderer;
-
     [SerializeField]
     private GameObject launchpadObject;
-
     private float distanceToEarthsCrust = 1.6f;
-
     private bool isActive = true;
-
     private bool isMoving = true;
-
     private bool isShooting = false;
-
     [SerializeField]
     private LineRenderer lineRenderer;
+	[SerializeField]
+	private float maxDrawingDistance = 2.0f;
 
     private void Start()
     {
@@ -41,7 +37,7 @@ public class LaunchPad : MonoBehaviour {
         var mousePos = Input.mousePosition;
         mousePos.z = 10.0f;
         var worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-
+		worldPos.z = 0;
         return worldPos;
     }
 
@@ -72,7 +68,7 @@ public class LaunchPad : MonoBehaviour {
         if(isShooting)
         {
             if(Input.GetMouseButtonUp(0))
-            {
+			{
                 if (trajectoryPositions.Count > 1)
                 {
                     GameObject tempSat = SateliteFactory.FabricateRailgunSatelite();
@@ -87,7 +83,6 @@ public class LaunchPad : MonoBehaviour {
                 isActive = false;
             }
         }
-           
     }
 
 
@@ -101,28 +96,36 @@ public class LaunchPad : MonoBehaviour {
     List<Vector3> trajectoryPositions = new List<Vector3>();
     public void DrawTrajectory()
     {
-        if (trajectoryPositions.Count == 0)
-        {
+		// Set initial position
+        if (trajectoryPositions.Count == 0) {
             trajectoryPositions.Add(launchpadObject.transform.position);
         }
-        if (Vector3.Distance(GetMouseWorldPosition() + new Vector3(0, 0, -1), Vector3.zero + new Vector3(0, 0, -1)) < Vector3.Distance(Vector3.zero + new Vector3(0, 0, -1), launchpadObject.transform.position))
-        {
-            trajectoryPositions = new List<Vector3>();
-            lineRenderer.positionCount = trajectoryPositions.Count;
-            lineRenderer.SetPositions(trajectoryPositions.ToArray());
-            return;
-        }
-        float length = trajectoryPositions.Count == 0 ? 0 :
-            Vector3.Distance(trajectoryPositions[0], GetMouseWorldPosition() + new Vector3(0, 0, -1));
-        for (int i = 0; i < trajectoryPositions.Count - 1; i++)
-        {
-            length += Vector3.Distance(trajectoryPositions[i], trajectoryPositions[i + 1]);
-        }
-        if (length < 5)
-        {
-            if (trajectoryPositions[trajectoryPositions.Count - 1] != GetMouseWorldPosition() + new Vector3(0, 0, -1))
-                trajectoryPositions.Add(GetMouseWorldPosition() + new Vector3(0, 0, -1));
-        }
+
+		// Calculate currently drawn trajectory length
+		float length = 0.0f;
+		for (int i = 1; i < trajectoryPositions.Count; i++) {
+			length += Vector3.Distance(trajectoryPositions[i - 1], trajectoryPositions[i]);
+		}
+
+		// Check if drawing is allowed
+		if (length < maxDrawingDistance) {
+			float remainingDistance = maxDrawingDistance - length;
+			Vector3 prevPosition = trajectoryPositions[trajectoryPositions.Count - 1];
+			Vector3 newPosition = GetMouseWorldPosition() + new Vector3(0, 0, -1);
+
+			// Only add new point when position is different from previous one
+			if (prevPosition != newPosition) {
+				float newLength = length + Vector3.Distance(prevPosition, newPosition);
+				// Limit last path length if it exceeds the maxDrawingDistance
+				if (newLength > maxDrawingDistance) {
+					Vector3 lastPath = newPosition - prevPosition;
+					lastPath = Vector3.ClampMagnitude(lastPath, remainingDistance);
+					newPosition = prevPosition + lastPath;
+				}
+
+				trajectoryPositions.Add(newPosition);
+			}
+		}
 
         lineRenderer.positionCount = trajectoryPositions.Count;
         lineRenderer.SetPositions(trajectoryPositions.ToArray());
