@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour {
     PlayerInfoView playerInfoView;
 
     public SateliteFactory.SatelliteType currentSatelliteType;
+    public float currentSatelliteCost = 125;
 
     public void ChangeToDefaultSatellite()
     {
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), currentSatelliteType.ToString());
+        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), currentSatelliteType.ToString(), currentSatelliteCost);
         foreach(var m in population.GetAllMinions())
         { 
             currentPlayer.Score.AddScore(m.GetCurrentScore());
