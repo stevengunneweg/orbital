@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class SignalTransmitter : MonoBehaviour
 {
+    public delegate void EntityEvent(SignalTransmitter transmitter);
+    public static event EntityEvent OnCreated;
+    public static event EntityEvent OnDestroyed;
+
     static Dictionary<SignalType, List<SignalTransmitter>> instances;
     public static Dictionary<SignalType, List<SignalTransmitter>> Instances
     {
@@ -19,7 +23,9 @@ public class SignalTransmitter : MonoBehaviour
             return instances;
         }
     }
-    
+
+    Population population;
+
     public HashSet<Minion> ConnectedMinions { get; private set; }
 
     [SerializeField]
@@ -27,25 +33,37 @@ public class SignalTransmitter : MonoBehaviour
     [SerializeField]
     private SignalType signalType;
     public SignalType SignalType { get { return signalType; } }
-    
-    private Transform planet;
+    public Transform Planet;
+
 
 	// Use this for initialization
 	private void Start () {
+        if(OnCreated!=null)
+        {
+            OnCreated(this);
+        }
+
         ConnectedMinions = new HashSet<Minion>();
 
         Instances[signalType].Add(this);
-        if (planet == null)
+        if (Planet == null)
         {
             GameObject planetGameObject = GameObject.Find("Earth");
             if (planetGameObject != null)
-                this.planet = planetGameObject.transform;
+                this.Planet = planetGameObject.transform;
         }
 	}
 
     private void OnDestroy()
     {
+        if (OnDestroyed != null)
+            OnDestroyed(this);
         Instances[signalType].Remove(this);
+    }
+
+    public void SetPopuplation(Population pop)
+    {
+        this.population = pop;
     }
 	
 	// Update is called once per frame
@@ -56,8 +74,8 @@ public class SignalTransmitter : MonoBehaviour
 
     public bool SignalReaches(Minion receiver)
     {
-        Vector2 planetDirection = (Vector2)planet.position - (Vector2)transform.position;
-        if (Vector2.Dot(planetDirection, (Vector2)planet.position - (Vector2)receiver.transform.position) < 0)
+        Vector2 planetDirection = (Vector2)Planet.position - (Vector2)transform.position;
+        if (Vector2.Dot(planetDirection, (Vector2)Planet.position - (Vector2)receiver.transform.position) < 0)
             return false;
         
         Vector2 receiverDirection = (Vector2)receiver.transform.position - (Vector2)transform.position;
@@ -74,9 +92,11 @@ public class SignalTransmitter : MonoBehaviour
     private HashSet<Minion> findConnectedReceivers()
     {
         HashSet<Minion> connectedReceivers = new HashSet<Minion>();
-        foreach (var receiver in Minion.Instances)
+        foreach (var receiver in population.GetAllMinions())
             if (SignalReaches(receiver))
                 connectedReceivers.Add(receiver);
         return connectedReceivers;
     }
+
+    
 }
