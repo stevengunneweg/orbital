@@ -5,6 +5,26 @@ using UnityEngine;
 
 public class Minion : MonoBehaviour
 {
+
+    public delegate void EntityEvent(Minion transmitter);
+    public static event EntityEvent OnCreated;
+    public static event EntityEvent OnDestroyed;
+
+    private void Start()
+    {
+        if (OnCreated != null) OnCreated(this);
+
+    }
+
+    private void OnDestroy()
+    {
+        if (OnDestroyed != null) OnDestroyed(this);
+    }
+
+
+    [SerializeField]
+    GameObject plusParticle;
+
     private Population population;
     public void SetPopulation(Population pop)
     {
@@ -16,10 +36,16 @@ public class Minion : MonoBehaviour
 
     void Update()
     {
+        if(this.population == null)
+        {
+            if (OnCreated != null) OnCreated(this);
+        }
+
         connectionScore = 0;
         foreach (SignalType signalType in Enum.GetValues(typeof(SignalType)))
         {
             connectionScore += calculateScore(signalType) * Time.deltaTime * 0.03f;
+            if(calculateScore(signalType) * Time.deltaTime * 0.03f > 0) GameObject.Instantiate(plusParticle, transform.position, Quaternion.identity);
         }
     }
 
