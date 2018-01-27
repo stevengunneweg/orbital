@@ -9,7 +9,7 @@ public class Satelite : MonoBehaviour {
     int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
     List<Vector3> launchRoute = new List<Vector3>();
     GameObject pivot;
-	float currentOrbitalVelocity = 0.1f;
+	float currentOrbitalVelocity = 0.05f;
 
     public void Spawn(List<Vector3> launchRoute)
     {
