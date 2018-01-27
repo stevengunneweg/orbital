@@ -14,11 +14,12 @@ public class SateliteFactory : MonoBehaviour {
             return _factory;
         }
     }
+	public const int defaultTeamId = 1;
 
     [Header("Base")]
     public GameObject sateliteBasePrefab;
 
-	private static GameObject Base(int teamId = 1)
+	private static GameObject Base(int teamId = defaultTeamId)
     {
         var instance = Instantiate(Factory.sateliteBasePrefab);
         instance.name = "Default Satelite";
@@ -27,7 +28,7 @@ public class SateliteFactory : MonoBehaviour {
         return instance;
     }
 
-	public static GameObject FabricateDefaultSatelite(int teamId = 1)
+	public static GameObject FabricateDefaultSatelite(int teamId = defaultTeamId)
     {
 		var instance = Base(teamId);
         return instance;
@@ -37,7 +38,7 @@ public class SateliteFactory : MonoBehaviour {
     [Header("Indestructable Satelite Values")]
     public int indestructableHealth = 9999;
 
-	public static GameObject FabricateIndestructableSatelite(int teamId = 1)
+	public static GameObject FabricateIndestructableSatelite(int teamId = defaultTeamId)
     {
 		var instance = Base(teamId);
 		instance.name = "Indestructable Satelite";
@@ -50,7 +51,7 @@ public class SateliteFactory : MonoBehaviour {
     public float railgunRotationSpeed = 1f;
     public float railgunReloadDuration = 1f;
 
-	public static GameObject FabricateRailgunSatelite(int teamId = 1)
+	public static GameObject FabricateRailgunSatelite(int teamId = defaultTeamId)
     {
 		var instance = Base(teamId);
 		instance.name = "Railgun Satelite";
