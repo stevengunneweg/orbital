@@ -1278,7 +1278,7 @@ Prefab:
         type: 2}
       propertyPath: coneMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 4c5da270859141b4391ba829cab73206, type: 2}
+      objectReference: {fileID: 2100000, guid: f4ad01f4549022149b216263c5d21b04, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 154ddcd8d4b7fdc4b937611f763dcdee, type: 2}
   m_IsPrefabParent: 0

@@ -66,7 +66,7 @@ Shader "Unlit/TestShader"
 	float4 frag(v2f i) : SV_Target
 	{
 		// Basic color fade+ bars
-		float4 col = float4(_Color.x, _Color.y, _Color.z, pow( i.uv.y,2)*((_SinTime.w + 1) / 2 + 0.25));
+		float4 col = float4(_Color.x, _Color.y, _Color.z, pow( i.uv.y,4)*((_SinTime.w + 1) / 2 + 0.25));
 		col = col + float4(_Color.x, _Color.y, _Color.z, pow(( i.uv.y), 2)*horizontalBars((i.uv.y)).w) / 2;
 
 		return col;
