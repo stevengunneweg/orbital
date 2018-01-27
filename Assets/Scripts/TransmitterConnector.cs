@@ -119,8 +119,9 @@ public class TransmitterConnector : MonoBehaviour
     {
         if (line == null)
         {
-            line = GetComponent<LineRenderer>();
+            line = GetComponentsInChildren<LineRenderer>()[1];
         }
+        line.positionCount = 0;
         foreach (var c in Connections)
         {
             if (isInSight(c))
