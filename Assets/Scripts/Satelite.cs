@@ -11,6 +11,8 @@ public class Satelite : MonoBehaviour {
 	GameObject pivot;
 	float currentOrbitalVelocity = 0.05f;
 	public bool SatelliteActivated { get; private set; }
+    [SerializeField]
+    GameObject rocket;
 
 	private GameObject cone;
 
@@ -49,7 +51,9 @@ public class Satelite : MonoBehaviour {
 	}
     private void Update()
     {
-		if (launchRoute.Count != 0) {
+        rocket.SetActive((launchRoute.Count != 0));
+
+        if (launchRoute.Count != 0) {
 			TravelToInitialDestination();
 			return;
 		}
@@ -81,16 +85,29 @@ public class Satelite : MonoBehaviour {
     void TravelToInitialDestination()
     {
         float distanceTraveled = 0;
+        float distanceForTurning = 0.001f;
         distanceTraveled += Vector3.Distance(transform.position, launchRoute[0]);
         if(distanceTraveled > values.GetMaxTrajectoryLength())
         {
             Vector3 newPosition1 = Vector3.MoveTowards(transform.position, launchRoute[0], (values.GetMaxTrajectoryLength()));
+            if (Vector3.Distance(transform.position, newPosition1) > distanceForTurning)
+            {
+                transform.LookAt(newPosition1);
+                transform.Rotate(new Vector3(-90, 0, 0));
+                transform.Rotate(new Vector3(0, -90, 0));
+            }
             transform.position = newPosition1;
             return;
         }
         while (distanceTraveled < values.GetMaxTrajectoryLength() && launchRoute.Count > 0)
         {
             Vector3 newPosition = Vector3.MoveTowards(transform.position, launchRoute[0], (values.GetMaxTrajectoryLength() - distanceTraveled));
+            if(Vector3.Distance(transform.position,newPosition) > distanceForTurning)
+            {
+                transform.LookAt(newPosition);
+                transform.Rotate(new Vector3(-90, 0, 0));
+                transform.Rotate(new Vector3(0, -90, 0));
+            }
             transform.position = newPosition;
             distanceTraveled += Vector3.Distance(transform.position, launchRoute[0]);
 
@@ -99,10 +116,13 @@ public class Satelite : MonoBehaviour {
                 launchRoute.RemoveAt(0);
 			}
         }
-
-		transform.LookAt(new Vector3(0, 0, transform.position.z));
-		transform.Rotate(new Vector3(-90, 0, 0));
-		transform.Rotate(new Vector3(0, -90, 0));
+        if(launchRoute.Count == 0)
+        {
+            transform.LookAt(new Vector3(0, 0, transform.position.z));
+            transform.Rotate(new Vector3(-90, 0, 0));
+            transform.Rotate(new Vector3(0, -90, 0));
+        }
+		
 
 		// Resize cone
 		if (cone != null) {
