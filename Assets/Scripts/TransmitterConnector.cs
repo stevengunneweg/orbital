@@ -27,7 +27,7 @@ public class TransmitterConnector : MonoBehaviour
     public HashSet<TransmitterConnector> Connections { get; private set; }
 
     SignalType signalType { get { return Transmitter.SignalType; } }
-    
+
     void Awake()
     {
         Transmitter = GetComponent<SignalTransmitter>();
@@ -119,14 +119,18 @@ public class TransmitterConnector : MonoBehaviour
     {
         if (line == null)
         {
-            line = GetComponent<LineRenderer>();
+            line = GetComponentsInChildren<LineRenderer>()[1];
         }
+        line.positionCount = 0;
         foreach (var c in Connections)
         {
-            line.positionCount += 3;
-            line.SetPosition(line.positionCount - 1, transform.position);
-            line.SetPosition(line.positionCount - 2, c.transform.position);
-            line.SetPosition(line.positionCount - 3, transform.position);
+            if (isInSight(c))
+            {
+                line.positionCount += 3;
+                line.SetPosition(line.positionCount - 1, transform.position);
+                line.SetPosition(line.positionCount - 2, c.transform.position);
+                line.SetPosition(line.positionCount - 3, transform.position);
+            }
         }
     }
 }

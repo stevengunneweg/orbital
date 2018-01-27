@@ -40,7 +40,7 @@ public class Satelite : MonoBehaviour {
 
     protected void Awake()
     {
-		values = new SateliteValues(10, 0.5f, 0.05f);
+		values = new SateliteValues(50, 0.5f, 0.05f);
 	}
 
 	protected void Start()
