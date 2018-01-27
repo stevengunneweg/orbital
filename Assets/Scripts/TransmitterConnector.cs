@@ -33,26 +33,12 @@ public class TransmitterConnector : MonoBehaviour
         Transmitter = GetComponent<SignalTransmitter>();
         Connections = new HashSet<TransmitterConnector>();
 
-        if (isActiveAndEnabled)
-            Instances[signalType].Add(this);
-    }
-
-    void OnEnable()
-    {
-        if (!Instances[signalType].Contains(this))
-            Instances[signalType].Add(this);
-    }
-
-    void OnDisable()
-    {
-        if (Instances[signalType].Contains(this))
-            Instances[signalType].Remove(this);
+        Instances[signalType].Add(this);
     }
 
     void OnDestroy()
     {
-        if (Instances[signalType].Contains(this))
-            Instances[signalType].Remove(this);
+        Instances[signalType].Remove(this);
     }
 
     static bool isFirstObjectToUpdate = true;
@@ -103,6 +89,9 @@ public class TransmitterConnector : MonoBehaviour
         List<HashSet<TransmitterConnector>> groups = new List<HashSet<TransmitterConnector>>();
         foreach (var transmitter in Instances[signalType])
         {
+            if (!transmitter.Transmitter.Activated)
+                continue;
+
             List<int> connections = new List<int>();
             for (int i = 0; i < groups.Count; ++i)
                 if (isInSight(groups[i]))

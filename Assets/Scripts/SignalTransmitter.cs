@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Satelite))]
 public class SignalTransmitter : MonoBehaviour
 {
     public delegate void EntityEvent(SignalTransmitter transmitter);
     public static event EntityEvent OnCreated;
     public static event EntityEvent OnDestroyed;
+
+    Satelite satelite;
+    public bool Activated { get { return satelite.SatelliteActivated; } }
 
     static Dictionary<SignalType, List<SignalTransmitter>> instances;
     public static Dictionary<SignalType, List<SignalTransmitter>> Instances
@@ -44,6 +48,7 @@ public class SignalTransmitter : MonoBehaviour
         }
 
         ConnectedMinions = new HashSet<Minion>();
+        satelite = GetComponent<Satelite>();
 
         Instances[signalType].Add(this);
         if (Planet == null)
