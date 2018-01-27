@@ -20,6 +20,22 @@ public class LaunchPad : MonoBehaviour {
     [SerializeField]
     private LineRenderer lineRenderer;
 
+    private void Start()
+    {
+        MenuHandler.OnBuySattelite += BuySatellite;
+    }
+
+    private void OnDestroy()
+    {
+        MenuHandler.OnBuySattelite -= BuySatellite;
+    }
+
+    private void BuySatellite()
+    {
+        isActive = true;
+        isMoving = true;
+    }
+
     private Vector3 GetMouseWorldPosition()
     {
         var mousePos = Input.mousePosition;
@@ -57,41 +73,60 @@ public class LaunchPad : MonoBehaviour {
         {
             if(Input.GetMouseButtonUp(0))
             {
-                GameObject tempSat = SateliteFactory.FabricateDefaultSatelite();
-                tempSat.GetComponent<Satelite>().Spawn(trajectoryPositions);
-				tempSat.GetComponent<Satelite>().transform.Rotate(launchpadObject.transform.rotation.eulerAngles);
+                if (trajectoryPositions.Count > 1)
+                {
+                    GameObject tempSat = SateliteFactory.FabricateDefaultSatelite();
+                    tempSat.GetComponent<Satelite>().Spawn(trajectoryPositions);
+                    tempSat.GetComponent<Satelite>().transform.Rotate(launchpadObject.transform.rotation.eulerAngles);
+                }
+
                 trajectoryPositions = new List<Vector3>();
-                isMoving = true;
+                Clear();
+                isMoving = false;
                 isShooting = false;
+                isActive = false;
             }
         }
            
     }
 
+
+    public void Clear()
+    {
+        launchpadObject.transform.position = new Vector3(1000000, 0, 0);
+        lineRenderer.positionCount = trajectoryPositions.Count;
+        lineRenderer.SetPositions(trajectoryPositions.ToArray());
+    }
+
     List<Vector3> trajectoryPositions = new List<Vector3>();
     public void DrawTrajectory()
     {
+        if (trajectoryPositions.Count == 0)
+        {
+            trajectoryPositions.Add(launchpadObject.transform.position);
+        }
+        if (Vector3.Distance(GetMouseWorldPosition() + new Vector3(0, 0, -1), Vector3.zero + new Vector3(0, 0, -1)) < Vector3.Distance(Vector3.zero + new Vector3(0, 0, -1), launchpadObject.transform.position))
+        {
+            trajectoryPositions = new List<Vector3>();
+            lineRenderer.positionCount = trajectoryPositions.Count;
+            lineRenderer.SetPositions(trajectoryPositions.ToArray());
+            return;
+        }
         float length = trajectoryPositions.Count == 0 ? 0 :
             Vector3.Distance(trajectoryPositions[0], GetMouseWorldPosition() + new Vector3(0, 0, -1));
-        
-        for (int i=0;i<trajectoryPositions.Count -1; i++)
+        for (int i = 0; i < trajectoryPositions.Count - 1; i++)
         {
             length += Vector3.Distance(trajectoryPositions[i], trajectoryPositions[i + 1]);
         }
-        if(length < 5)
+        if (length < 5)
         {
-            trajectoryPositions.Add(GetMouseWorldPosition() + new Vector3(0, 0, -1));
+            if (trajectoryPositions[trajectoryPositions.Count - 1] != GetMouseWorldPosition() + new Vector3(0, 0, -1))
+                trajectoryPositions.Add(GetMouseWorldPosition() + new Vector3(0, 0, -1));
         }
 
         lineRenderer.positionCount = trajectoryPositions.Count;
         lineRenderer.SetPositions(trajectoryPositions.ToArray());
     }
-
-    public void ShootSatellite()
-    {
-
-    }
-
 
     public void UpdatePosition()
     {
