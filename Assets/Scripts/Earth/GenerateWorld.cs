@@ -10,6 +10,19 @@ public class GenerateWorld : MonoBehaviour {
 
     public Vector3 offset;
 
+    [SerializeField]
+    private List<GameObject> _treesPrefabs;
+    [SerializeField]
+    private List<GameObject> _buildingPrefabs;
+    [SerializeField]
+    private GameObject _person;
+
+    private List<Vector3> z_vertices = new List<Vector3>();
+    private List<int> seaLevel_index =  new List<int>();
+    private List<Vector3> cityPos = new List<Vector3>();
+
+    private float chanceToSpawnCity = 0.5f;
+
     [ContextMenu("Randomize")]
     void RandomizeOffset()
     {
@@ -34,14 +47,69 @@ public class GenerateWorld : MonoBehaviour {
     void Generate()
     {
         Vector3[] vertices = _meshfilter.mesh.vertices;
-        for(int i = 0; i < vertices.Length;i++)
+        int zi = 0;
+        for (int i = 0; i < vertices.Length;i++)
         {
             vertices[i] += _meshfilter.mesh.normals[i] * ((Perlin.Noise(offset+vertices[i]* noisesScale) /255f)* roughness);
-
+            
+            if(vertices[i].z<= 0.01&& vertices[i].z >= -0.01)
+            {
+                z_vertices.Add(vertices[i]);
+                zi++;
+                float height = CalculateHeight(vertices[i]);
+                if (height >= 0.5f && height < 2f)
+                    seaLevel_index.Add(zi);
+            }
         }
         _meshfilter.mesh.vertices = vertices;
         _meshfilter.mesh.RecalculateBounds();
+        SpawnBuilding();
+        SpawnPerson();
     }
+
+    void SpawnPerson()
+    {
+        foreach (Vector3 citypos in cityPos)
+        {
+            GameObject go = Instantiate(_person);
+            Vector3 pos = citypos;
+            go.transform.position = pos;
+            go.transform.up = citypos;
+        }
+    }
+    void SpawnBuilding()
+    {
+        foreach(int index in seaLevel_index)
+        {
+            if (Random.value >= chanceToSpawnCity)
+            {
+                GameObject go = Instantiate(_buildingPrefabs[(int)(Random.value*2)]);
+                Vector3 pos = CalculatePos(z_vertices[index], go);
+                cityPos.Add(pos);
+
+            }
+        }
+
+    }
+    void SpawnTree()
+    {
+
+    }
+    Vector3 CalculatePos(Vector3 vertex,GameObject go)
+    {
+        Vector3 pos = vertex;
+        pos.x *= transform.localScale.x + (go.transform.localScale.x / 2) - 0.1f;
+        pos.y *= transform.localScale.y + (go.transform.localScale.y / 2) - 0.1f;
+        go.transform.position = pos;
+        go.transform.up = pos;
+        return pos;
+    }
+
+    float CalculateHeight(Vector3 vertex)
+    {
+        return (Vector3.Distance(Vector3.zero, vertex)-1)*100;
+    }
+
     MeshFilter CreateShereMesh()
     {
         MeshFilter filter = gameObject.AddComponent<MeshFilter>();
