@@ -147,7 +147,7 @@ public class LaunchPad : MonoBehaviour {
                 newPosition = newPosition.normalized * minDist;
 
 			// Only add new point when position is different from previous one
-			if (prevPosition != newPosition) {
+			if (Vector3.Distance(prevPosition, newPosition) > 0.01f) {
 				float newLength = length + Vector3.Distance(prevPosition, newPosition);
 				// Limit last path length if it exceeds the maxDrawingDistance
 				if (newLength > maxDrawingDistance) {
