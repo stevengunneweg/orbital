@@ -7,7 +7,7 @@ public class LaunchPad : MonoBehaviour {
     private Renderer launchpadRenderer;
     [SerializeField]
     private GameObject launchpadObject;
-    private float distanceToEarthsCrust = 1.6f;
+    private float distanceToEarthsCrust = 2.5f;
     private bool isActive = true;
     private bool isMoving = true;
     private bool isShooting = false;
@@ -57,7 +57,7 @@ public class LaunchPad : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             trajectoryPositions = new List<Vector3>();
-            trajectoryPositions.Add(launchpadObject.transform.position);
+            trajectoryPositions.Add(launchpadObject.transform.position + launchpadObject.transform.position.normalized * 0.2f);
             isShooting = true;
             isMoving = false;
         }
@@ -111,7 +111,11 @@ public class LaunchPad : MonoBehaviour {
 		if (length < maxDrawingDistance) {
 			float remainingDistance = maxDrawingDistance - length;
 			Vector3 prevPosition = trajectoryPositions[trajectoryPositions.Count - 1];
-			Vector3 newPosition = GetMouseWorldPosition() + new Vector3(0, 0, -1);
+			Vector3 newPosition = GetMouseWorldPosition();
+
+            var minDist = distanceToEarthsCrust + 0.2f;
+            if (newPosition.magnitude < minDist)
+                newPosition = newPosition.normalized * minDist;
 
 			// Only add new point when position is different from previous one
 			if (prevPosition != newPosition) {
@@ -133,6 +137,6 @@ public class LaunchPad : MonoBehaviour {
 
     public void UpdatePosition()
     {
-        launchpadObject.transform.position = GetMouseWorldPosition().normalized * distanceToEarthsCrust + new Vector3(0,0,-1);
+        launchpadObject.transform.position = GetMouseWorldPosition().normalized * distanceToEarthsCrust;
     }
 }
