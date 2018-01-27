@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 79513217}
   - component: {fileID: 79513216}
   m_Layer: 5
-  m_Name: DefaultSatellitePanel
+  m_Name: TransmitSatellitePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -742,7 +742,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Default Satellite
+  m_text: Transmission Satellite
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 715b80e429c437e40867928a4e1fc975, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 33db60c37b63f08448ded4b385e74e38, type: 2}
@@ -4038,7 +4038,7 @@ MonoBehaviour:
   population: {fileID: 1531593531}
   launchPad: {fileID: 1647635519}
   playerInfoView: {fileID: 414976772}
-  currentSatelliteType: 0
+  currentSatelliteType: 1
 --- !u!4 &1531593530
 Transform:
   m_ObjectHideFlags: 0
@@ -4955,9 +4955,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: A very boring satellity that only has a transmission module, which isn't
-    even that good. Once you can afford to buy better satellites than this one, you
-    are highly recommended to do so.
+  m_text: A very boring transmission satellity that only has a transmission module,
+    which isn't even that good. Once you can afford to buy better satellites than
+    this one, you are highly recommended to do so.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 715b80e429c437e40867928a4e1fc975, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 715b80e429c437e40867928a4e1fc975, type: 2}
@@ -5542,7 +5542,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1531593529}
-        m_MethodName: ChangeToDefaultSatellite
+        m_MethodName: ChangeToTransmissionSatellite
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

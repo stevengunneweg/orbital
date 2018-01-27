@@ -39,9 +39,8 @@ public class SateliteFactory : MonoBehaviour
                 break;
 			case SatelliteType.Default:
 			case SatelliteType.Transmit:
-				MakeTransmitSatelite(_base);
-				break;
             default:
+                MakeTransmitSatelite(_base);
                 AddTransmissionGraphics(_base);
                 break;
         }
