@@ -9,6 +9,11 @@ public class DecreaseHealthOnCollision : MonoBehaviour {
 
     int decreaseHealth = 50;
 
+    public void SetHealthDecrease(int nr)
+    {
+        decreaseHealth = nr;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         health.DecreaseHealth(decreaseHealth);
