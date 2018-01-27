@@ -3482,6 +3482,7 @@ MonoBehaviour:
   launchPad: {fileID: 1647635519}
   playerInfoView: {fileID: 414976772}
   currentSatelliteType: 1
+  currentSatelliteCost: 125
 --- !u!4 &1531593530
 Transform:
   m_ObjectHideFlags: 0
@@ -3922,7 +3923,6 @@ MonoBehaviour:
   launchpadRenderer: {fileID: 1647635517}
   launchpadObject: {fileID: 1647635516}
   lineRenderer: {fileID: 1647635520}
-  maxDrawingDistance: 2
 --- !u!120 &1647635520
 LineRenderer:
   m_ObjectHideFlags: 0
