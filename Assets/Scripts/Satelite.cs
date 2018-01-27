@@ -6,7 +6,7 @@ public class Satelite : MonoBehaviour {
 
     [SerializeField]
     SateliteValues values;
-    int turningDirection = 1;//0 == Counter Clockwise -> 1 == Clockwise
+    int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
     List<Vector3> launchRoute;
     GameObject pivot;
 
@@ -41,54 +41,12 @@ public class Satelite : MonoBehaviour {
 
     void DetermineDirection()
     {
-        Vector2 deltaBetweenLast = new Vector2(launchRoute[launchRoute.Count - 1].x - launchRoute[launchRoute.Count - 2].x,
-                                              launchRoute[launchRoute.Count - 1].y - launchRoute[launchRoute.Count - 2].y);
+		Vector3 lastRouteCoordinate = launchRoute[launchRoute.Count - 1];
+		Vector3 secondLastRouteCoordinate = launchRoute[launchRoute.Count - 2];
+		// Find the direction of the cross product to know which direction the vector is going (down for CW or up for CCW).
+		Vector3 cross = Vector3.Cross(lastRouteCoordinate, secondLastRouteCoordinate);
 
-        if (launchRoute[launchRoute.Count - 1].x > 0 && launchRoute[launchRoute.Count - 1].y > 0)
-        {
-            if (Mathf.Abs(deltaBetweenLast.y) > Mathf.Abs(deltaBetweenLast.x))
-            {
-                turningDirection = deltaBetweenLast.x > 0 ? 1 : -1;
-            }
-            else
-            {
-                turningDirection = deltaBetweenLast.y > 0 ? -1 : 1;
-            }
-        }
-        else if (launchRoute[launchRoute.Count - 1].x < 0 && launchRoute[launchRoute.Count - 1].y > 0)
-        {
-            if (Mathf.Abs(deltaBetweenLast.y) > Mathf.Abs(deltaBetweenLast.x))
-            {
-                turningDirection = deltaBetweenLast.x > 0 ? 1 : -1;
-            }
-            else
-            {
-                turningDirection = deltaBetweenLast.y > 0 ? 1 : -1;
-            }
-        }
-        else if (launchRoute[launchRoute.Count - 1].x < 0 && launchRoute[launchRoute.Count - 1].y < 0)
-        {
-            if (Mathf.Abs(deltaBetweenLast.y) > Mathf.Abs(deltaBetweenLast.x))
-            {
-                turningDirection = deltaBetweenLast.x > 0 ? -1 : 1;
-            }
-            else
-            {
-                turningDirection = deltaBetweenLast.y > 0 ? 1 : -1;
-            }
-        }
-        else //(deltaBetweenLast.x > 0 && deltaBetweenLast.y < 0)
-        {
-            if (Mathf.Abs(deltaBetweenLast.y) > Mathf.Abs(deltaBetweenLast.x))
-            {
-                turningDirection = deltaBetweenLast.x > 0 ? -1 : 1;
-            }
-            else
-            {
-                turningDirection = deltaBetweenLast.y > 0 ? -1 : 1;
-            }
-        }
-
+		turningDirection = cross.z > 0 ? 1 : -1;
     }
 
     void TravelToInitialDestination()
