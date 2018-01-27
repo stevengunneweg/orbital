@@ -73,7 +73,7 @@ public class GenerateWorld : MonoBehaviour {
         {
             GameObject go = Instantiate(_person);
             Vector3 pos = citypos;
-            go.transform.position = pos;
+            go.transform.position = pos- Vector3.forward * 0.25f;
             go.transform.up = citypos;
         }
     }
@@ -85,6 +85,7 @@ public class GenerateWorld : MonoBehaviour {
             {
                 GameObject go = Instantiate(_buildingPrefabs[(int)(Random.value*2)]);
                 Vector3 pos = CalculatePos(z_vertices[index], go);
+                go.transform.position = go.transform.position+Vector3.forward*0.5f;
                 cityPos.Add(pos);
 
             }

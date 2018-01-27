@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a701acf731703d64f9322cd12edf9b1d
-timeCreated: 1517055027
+timeCreated: 1517063555
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -16,8 +16,10 @@ ModelImporter:
     2100000: 01 - Default
     2300000: Box001
     2300002: Cylinder001
+    2300004: //RootNode
     3300000: Box001
     3300002: Cylinder001
+    3300004: //RootNode
     4300000: Cylinder001
     4300002: Box001
     9500000: //RootNode
