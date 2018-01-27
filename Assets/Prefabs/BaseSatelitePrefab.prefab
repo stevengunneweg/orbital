@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114621983506263980}
   - component: {fileID: 50742797222169954}
   - component: {fileID: 58515917081142498}
+  - component: {fileID: 114245668391375044}
   m_Layer: 0
   m_Name: BaseSatelitePrefab
   m_TagString: Untagged
@@ -110,6 +111,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.125
+--- !u!114 &114245668391375044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1251501229717162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e66730398921764ba18b82929a9102a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  broadcastRadius: 32
+  signalType: 0
 --- !u!114 &114375211566705186
 MonoBehaviour:
   m_ObjectHideFlags: 1

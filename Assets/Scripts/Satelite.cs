@@ -6,6 +6,7 @@ public class Satelite : MonoBehaviour {
 
     [SerializeField]
     SateliteValues values;
+    int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
     List<Vector3> launchRoute;
     GameObject pivot;
 
@@ -16,6 +17,7 @@ public class Satelite : MonoBehaviour {
         transform.parent = pivot.transform;
 
         transform.position = launchRoute[0];
+        DetermineDirection();
     }
 
     public SateliteValues GetValues()
@@ -34,9 +36,19 @@ public class Satelite : MonoBehaviour {
             TravelToInitialDestination();
             return;
         }
-        pivot.transform.Rotate(new Vector3(0, 0, this.values.GetOrbitalVelocity()));
+        pivot.transform.Rotate(new Vector3(0, 0, this.values.GetOrbitalVelocity()*-1*turningDirection));
     }
-    
+
+    void DetermineDirection()
+    {
+		Vector3 lastRouteCoordinate = launchRoute[launchRoute.Count - 1];
+		Vector3 secondLastRouteCoordinate = launchRoute[launchRoute.Count - 2];
+		// Find the direction of the cross product to know which direction the vector is going (down for CW or up for CCW).
+		Vector3 cross = Vector3.Cross(lastRouteCoordinate, secondLastRouteCoordinate);
+
+		turningDirection = cross.z > 0 ? 1 : -1;
+    }
+
     void TravelToInitialDestination()
     {
         float distanceTraveled = 0;
@@ -54,11 +66,13 @@ public class Satelite : MonoBehaviour {
             distanceTraveled += Vector3.Distance(transform.position, launchRoute[0]);
 
 
-            if (transform.position == launchRoute[0])
+			if (transform.position == launchRoute[0]) {
                 launchRoute.RemoveAt(0);
+			}
         }
 
-
+		transform.LookAt(new Vector3(0, 0, transform.position.z));
+		transform.Rotate(new Vector3(-90, 0, 0));
+		transform.Rotate(new Vector3(0, -90, 0));
     }
-
 }
