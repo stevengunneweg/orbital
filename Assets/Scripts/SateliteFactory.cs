@@ -80,8 +80,8 @@ public class SateliteFactory : MonoBehaviour
         instance.name = Factory.sateliteBasePrefab.name;
 		instance.transform.position = new Vector3(1, 1, 1) * 10000;
         var satellite = instance.GetComponent<Satelite>();
-        satellite.SetTeamId(teamId);
         satellite.SetValues(new SateliteValues(cost, 0.5f, 0.05f));
+        satellite.SetTeamId(teamId);
         return instance;
     }
 
