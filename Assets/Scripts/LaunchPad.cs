@@ -75,7 +75,7 @@ public class LaunchPad : MonoBehaviour {
             {
                 if (trajectoryPositions.Count > 1)
                 {
-                    GameObject tempSat = SateliteFactory.FabricateDefaultSatelite();
+                    GameObject tempSat = SateliteFactory.FabricateRailgunSatelite();
                     tempSat.GetComponent<Satelite>().Spawn(trajectoryPositions);
                     tempSat.GetComponent<Satelite>().transform.Rotate(launchpadObject.transform.rotation.eulerAngles);
                 }
