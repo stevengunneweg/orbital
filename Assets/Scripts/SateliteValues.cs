@@ -39,4 +39,8 @@ public class SateliteValues
 		return teamId;
 	}
 
+	public void SetTeamId(int value)
+	{
+		teamId = value;
+	}
 }

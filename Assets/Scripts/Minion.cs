@@ -19,7 +19,7 @@ public class Minion : MonoBehaviour
         connectionScore = 0;
         foreach (SignalType signalType in Enum.GetValues(typeof(SignalType)))
         {
-            connectionScore += calculateScore(signalType) * Time.deltaTime * 2.0f;
+            connectionScore += calculateScore(signalType) * Time.deltaTime * 0.03f;
         }
     }
 
@@ -29,7 +29,7 @@ public class Minion : MonoBehaviour
         if (!isConnected(signalType))
             return 0;
 
-        return (getConnections(signalType).Count + 1) * Time.deltaTime;
+        return (getConnections(signalType).Count + 1);
     }
 
     bool isConnected(SignalType signalType)
