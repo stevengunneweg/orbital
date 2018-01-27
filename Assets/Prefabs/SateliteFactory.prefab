@@ -53,6 +53,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sateliteBasePrefab: {fileID: 1251501229717162, guid: 340d105bd65f71b449cf4aaf6c204f61,
     type: 2}
+  graphics_satellite_att: {fileID: 1913874688705360, guid: cff252523dd6b7a4ba773fafac0b11ca,
+    type: 2}
+  graphics_satellite_def: {fileID: 1755777789734086, guid: 5f834a18ebebe1b4fa06869e1782d2d5,
+    type: 2}
+  graphics_satellite_trans: {fileID: 1864253495506212, guid: 6fc876057b8322f4f93765f09e443727,
+    type: 2}
   indestructableHealth: 99999
   railgunBulletPrefab: {fileID: 1639293868069558, guid: 483c568263f081442aa8c752969f2fc4,
     type: 2}
