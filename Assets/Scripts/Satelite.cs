@@ -69,6 +69,11 @@ public class Satelite : MonoBehaviour {
 			}
 		}
 
+		// Show cone when satellite is deployed
+		if (cone != null) {
+			cone.GetComponent<Renderer>().enabled = true;
+		}
+
 		pivot.transform.Rotate(new Vector3(0, 0, currentOrbitalVelocity * -1 * turningDirection));
     }
 
