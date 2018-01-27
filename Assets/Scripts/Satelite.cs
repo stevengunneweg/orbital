@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Satelite : MonoBehaviour {
-
-    [SerializeField]
+    
     SateliteValues values;
     int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
     List<Vector3> launchRoute = new List<Vector3>();
@@ -27,7 +26,10 @@ public class Satelite : MonoBehaviour {
         DetermineDirection();
         SatelliteActivated = true;
     }
-
+    public void SetValues(SateliteValues values)
+    {
+        this.values = values;
+    }
     public SateliteValues GetValues()
     {
         return this.values;
@@ -40,6 +42,7 @@ public class Satelite : MonoBehaviour {
 
     protected void Awake()
     {
+        if(values == null)
 		values = new SateliteValues(50, 0.5f, 0.05f);
 	}
 

@@ -10,6 +10,8 @@ public class SateliteFactory : MonoBehaviour
 		Default,
 		Transmit,
         Railgun,
+        Shield,
+        SelfRepairing
     }
 
     private static SateliteFactory _factory;
@@ -37,7 +39,13 @@ public class SateliteFactory : MonoBehaviour
                 MakeRailgun(_base);
                 AddAttGraphics(_base);
                 break;
-			case SatelliteType.Default:
+            case SatelliteType.SelfRepairing:
+                SelfRepairingTransmitSatelite(_base);
+                break;
+            case SatelliteType.Shield:
+                MakeDefenseSatelite(_base);
+                break;
+            case SatelliteType.Default:
 			case SatelliteType.Transmit:
             default:
                 MakeTransmitSatelite(_base);
@@ -112,7 +120,8 @@ public class SateliteFactory : MonoBehaviour
 		cone.GetComponent<MeshRenderer>().sharedMaterial = Factory.coneMaterial;
 		// Hide cone initially
 		cone.GetComponent<Renderer>().enabled = false;
-	}
+        _base.GetComponent<Satelite>().SetValues(new SateliteValues(100, 0.5f, 0.05f));
+    }
 
 	[Header("Indestructable Satelite Values")]
 	public int indestructableHealth = 9999;
@@ -140,5 +149,29 @@ public class SateliteFactory : MonoBehaviour
         railgun.rotationSpeed = Factory.railgunRotationSpeed;
         railgun.reloadDuration = Factory.railgunReloadDuration;
         railgun.bulletPrefab = Factory.railgunBulletPrefab;
+        _base.GetComponent<Satelite>().SetValues(new SateliteValues(150, 0.5f, 0.05f));
+    }
+
+    public static void MakeDefenseSatelite(GameObject _base)
+    {
+        _base.name = "Defense Satelite";
+
+        // Check if it already has a railgun
+        if (_base.GetComponent<RailgunModule>() != null)
+            return;
+        //Add 50 health 3 times
+        for(int i=0; i<3; i++)
+        {
+            _base.AddComponent<Shielding>();
+        }
+        _base.GetComponent<Satelite>().SetValues(new SateliteValues(150, 0.5f, 0.05f));
+    }
+
+    public static void SelfRepairingTransmitSatelite(GameObject _base)
+    {
+        _base.name = "Self Repairing Transmit";
+        MakeTransmitSatelite(_base);
+        _base.AddComponent<Repairing>();
+        _base.GetComponent<Satelite>().SetValues(new SateliteValues(200, 0.5f, 0.05f));
     }
 }
