@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LaunchPad : MonoBehaviour {
     public delegate void BoughtSatelliteEvent(GameObject satelliteObject);
@@ -67,7 +68,7 @@ public class LaunchPad : MonoBehaviour {
             isShooting = true;
             isMoving = false;
         }
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButton(0)&& !EventSystem.current.IsPointerOverGameObject())
         {
             DrawTrajectory();
         }
