@@ -45,6 +45,7 @@ public class TransmitterConnector : MonoBehaviour
     void Update()
     {
         isFirstObjectToUpdate = true;
+        DrawConnections();
     }
 
     void LateUpdate()
@@ -89,7 +90,7 @@ public class TransmitterConnector : MonoBehaviour
         List<HashSet<TransmitterConnector>> groups = new List<HashSet<TransmitterConnector>>();
         foreach (var transmitter in Instances[signalType])
         {
-            if (!transmitter.Transmitter.Activated)
+            if (!transmitter.Transmitter.Activated || !transmitter.Transmitter.IsPlayer)
                 continue;
 
             List<int> connections = new List<int>();
@@ -110,5 +111,22 @@ public class TransmitterConnector : MonoBehaviour
             }
         }
         return groups;
+    }
+
+
+    LineRenderer line;
+    void DrawConnections()
+    {
+        if (line == null)
+        {
+            line = GetComponent<LineRenderer>();
+        }
+        foreach (var c in Connections)
+        {
+            line.positionCount += 3;
+            line.SetPosition(line.positionCount - 1, transform.position);
+            line.SetPosition(line.positionCount - 2, c.transform.position);
+            line.SetPosition(line.positionCount - 3, transform.position);
+        }
     }
 }

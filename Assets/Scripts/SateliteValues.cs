@@ -11,6 +11,7 @@ public class SateliteValues
 	private float cost;
 	[SerializeField]
 	private int teamId;
+    public int TeamId { get { return teamId; } }
 
     public SateliteValues(float cost, float orbitalVelocity, float maxTrajectoryLength)
     {

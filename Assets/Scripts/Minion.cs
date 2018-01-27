@@ -73,7 +73,7 @@ public class Minion : MonoBehaviour
         HashSet<SignalTransmitter> connectedTransmitters = new HashSet<SignalTransmitter>();
         foreach (SignalTransmitter signalTransmitter in SignalTransmitter.Instances[signalType])
         {
-            if (!signalTransmitter.Activated)
+            if (!signalTransmitter.Activated || !signalTransmitter.IsPlayer)
                 continue;
 
             if (signalTransmitter.ConnectedMinions.Contains(this))
