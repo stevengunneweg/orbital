@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Unlit/TestShader"
+Shader "Custom/TestShader"
 {
 	Properties
 	{
@@ -15,6 +15,9 @@ Shader "Unlit/TestShader"
 		Pass
 	{
 		Blend SrcAlpha OneMinusSrcAlpha
+
+		Cull Back
+		ZWrite Off
 
 		CGPROGRAM
 #pragma vertex vert

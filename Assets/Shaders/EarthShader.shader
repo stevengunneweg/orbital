@@ -50,7 +50,7 @@
 			// put more per-instance properties here
 		UNITY_INSTANCING_BUFFER_END(Props)
 
-			void surf(Input IN, inout SurfaceOutputStandard o) {
+		void surf(Input IN, inout SurfaceOutputStandard o) {
 
 			half min = _MinDepth;
 			half mid = _MidDepth;
