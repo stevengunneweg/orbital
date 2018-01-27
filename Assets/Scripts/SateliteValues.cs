@@ -2,14 +2,34 @@
 [System.Serializable]
 public class SateliteValues
 {
-    public float OrbitalVelocity { get; private set; }
-    public float MaxTrajectoryLength { get; private set; }
-    public float Cost { get; private set; }
+
+    [SerializeField]
+    private float orbitalVelocity;
+    [SerializeField]
+    private float maxTrajectoryLength;
+    [SerializeField]
+    private float cost;
 
     public SateliteValues(float cost, float orbitalVelocity, float maxTrajectoryLength)
     {
-        this.Cost = cost;
-        this.OrbitalVelocity = orbitalVelocity;
-        this.MaxTrajectoryLength = maxTrajectoryLength;
+        this.cost = cost;
+        this.orbitalVelocity = orbitalVelocity;
+        this.maxTrajectoryLength = maxTrajectoryLength;
     }
+
+    public float GetOrbitalVelocity()
+    {
+        return orbitalVelocity;
+    }
+
+    public float GetMaxTrajectoryLength()
+    {
+        return maxTrajectoryLength;
+    }
+
+    public float GetCost()
+    {
+        return cost;
+    }
+
 }

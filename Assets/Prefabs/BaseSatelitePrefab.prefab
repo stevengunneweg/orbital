@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4601809956292524}
-  - component: {fileID: 212945985765659396}
   - component: {fileID: 114738030419719872}
   - component: {fileID: 114375211566705186}
   - component: {fileID: 114468028063685278}
@@ -27,12 +26,41 @@ GameObject:
   - component: {fileID: 50742797222169954}
   - component: {fileID: 58515917081142498}
   m_Layer: 0
-  m_Name: Satelite
+  m_Name: BaseSatelitePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1640883248563580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4585545018698522}
+  - component: {fileID: 212229824376339860}
+  m_Layer: 0
+  m_Name: gfx
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4585545018698522
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1640883248563580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4601809956292524}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4601809956292524
 Transform:
   m_ObjectHideFlags: 1
@@ -40,9 +68,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1251501229717162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.002, y: 3.532, z: -0.85}
+  m_LocalPosition: {x: -0.386, y: 3.757, z: -0.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4585545018698522}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -129,12 +158,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc60ab4212117e4b8224f2aad4b8cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &212945985765659396
+  values:
+    orbitalVelocity: 0
+    maxTrajectoryLength: 0
+    cost: 0
+--- !u!212 &212229824376339860
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1251501229717162}
+  m_GameObject: {fileID: 1640883248563580}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

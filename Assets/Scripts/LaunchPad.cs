@@ -20,10 +20,6 @@ public class LaunchPad : MonoBehaviour {
     [SerializeField]
     private LineRenderer lineRenderer;
 
-    [SerializeField]
-    Satelite satelitePrefab;
-
-
     private Vector3 GetMouseWorldPosition()
     {
         var mousePos = Input.mousePosition;
@@ -61,7 +57,7 @@ public class LaunchPad : MonoBehaviour {
         {
             if(Input.GetMouseButtonUp(0))
             {
-                GameObject tempSat = GameObject.Instantiate(satelitePrefab.gameObject);
+                GameObject tempSat = SateliteFactory.FabricateDefaultSatelite();
                 tempSat.GetComponent<Satelite>().Spawn(trajectoryPositions);
                 trajectoryPositions = new List<Vector3>();
                 isMoving = true;
@@ -76,7 +72,7 @@ public class LaunchPad : MonoBehaviour {
     {
         float length = trajectoryPositions.Count == 0 ? 0 :
             Vector3.Distance(trajectoryPositions[0], GetMouseWorldPosition() + new Vector3(0, 0, -1));
-        Debug.Log("Length : " + length);
+        
         for (int i=0;i<trajectoryPositions.Count -1; i++)
         {
             length += Vector3.Distance(trajectoryPositions[i], trajectoryPositions[i + 1]);
