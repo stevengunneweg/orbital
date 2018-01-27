@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114245668391375044}
   - component: {fileID: 114844919889857564}
   - component: {fileID: 120395349093519754}
+  - component: {fileID: 114451380284197756}
   m_Layer: 0
   m_Name: BaseSatelitePrefab
   m_TagString: Untagged
@@ -140,6 +141,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 100
+--- !u!114 &114451380284197756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1251501229717162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547e19bf14c5ea549b9102fe7fcfafb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlePrefab: {fileID: 1464995353490426, guid: 9f11450b78813914d8d21bfe99508a62,
+    type: 2}
 --- !u!114 &114468028063685278
 MonoBehaviour:
   m_ObjectHideFlags: 1
