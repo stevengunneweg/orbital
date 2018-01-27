@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class SignalTransmitter : MonoBehaviour
 {
+    public delegate void EntityEvent(SignalTransmitter transmitter);
+    public static event EntityEvent OnCreated;
+    public static event EntityEvent OnDestroyed;
+
     static Dictionary<SignalType, List<SignalTransmitter>> instances;
     public static Dictionary<SignalType, List<SignalTransmitter>> Instances
     {
@@ -19,7 +23,9 @@ public class SignalTransmitter : MonoBehaviour
             return instances;
         }
     }
-    
+
+    Population population;
+
     public HashSet<Minion> ConnectedMinions { get; private set; }
 
     [SerializeField]
@@ -32,6 +38,11 @@ public class SignalTransmitter : MonoBehaviour
 
 	// Use this for initialization
 	private void Start () {
+        if(OnCreated!=null)
+        {
+            OnCreated(this);
+        }
+
         ConnectedMinions = new HashSet<Minion>();
 
         Instances[signalType].Add(this);
@@ -45,7 +56,14 @@ public class SignalTransmitter : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (OnDestroyed != null)
+            OnDestroyed(this);
         Instances[signalType].Remove(this);
+    }
+
+    public void SetPopuplation(Population pop)
+    {
+        this.population = pop;
     }
 	
 	// Update is called once per frame
@@ -74,7 +92,7 @@ public class SignalTransmitter : MonoBehaviour
     private HashSet<Minion> findConnectedReceivers()
     {
         HashSet<Minion> connectedReceivers = new HashSet<Minion>();
-        foreach (var receiver in Minion.Instances)
+        foreach (var receiver in population.GetAllMinions())
             if (SignalReaches(receiver))
                 connectedReceivers.Add(receiver);
         return connectedReceivers;

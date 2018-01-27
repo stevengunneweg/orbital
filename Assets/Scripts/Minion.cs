@@ -5,32 +5,21 @@ using UnityEngine;
 
 public class Minion : MonoBehaviour
 {
-    static List<Minion> instances = new List<Minion>();
-    public static List<Minion> Instances
+    private Population population;
+    public void SetPopulation(Population pop)
     {
-        get
-        {
-            if (instances == null)
-                instances = new List<Minion>();
-            return instances;
-        }
-    }
-    
-    void Start()
-    {
-        Instances.Add(this);
+        this.population = pop;
     }
 
-    void OnDestroy()
-    {
-        Instances.Remove(this);
-    }
+    float connectionScore = 0;
     
-    void FixedUpdate()
+    void Update()
     {
-        float connectionScore = 0;
+        connectionScore = 0;
         foreach (SignalType signalType in Enum.GetValues(typeof(SignalType)))
-            connectionScore += calculateScore(signalType);
+        {
+            connectionScore += calculateScore(signalType) * Time.deltaTime * 2.0f;
+        }
     }
 
     // todo [KG] make the score calculation do fancy things
@@ -45,8 +34,15 @@ public class Minion : MonoBehaviour
     bool isConnected(SignalType signalType)
     {
         foreach (SignalTransmitter transmitter in SignalTransmitter.Instances[signalType])
-            if (transmitter.ConnectedMinions.Contains(this))
+        {
+            if (transmitter.gameObject.GetComponent<Satelite>().SatelliteActivated && 
+                transmitter.ConnectedMinions.Contains(this))
+            {
+
                 return true;
+            }
+        }
+           
         return false;
     }
 
@@ -55,14 +51,27 @@ public class Minion : MonoBehaviour
         HashSet<Minion> connections = new HashSet<Minion>();
 
         foreach (SignalTransmitter signalTransmitter in SignalTransmitter.Instances[signalType])
+        {
             if (signalTransmitter.ConnectedMinions.Contains(this))
+            {
                 foreach (Minion receiver in signalTransmitter.ConnectedMinions)
+                {
                     if (!connections.Contains(receiver))
                         connections.Add(receiver);
+                }                    
+            }                
+        }        
 
         if (connections.Contains(this))
+        {
             connections.Remove(this);
+        }
 
         return connections;
+    }
+
+    public float GetCurrentScore()
+    {
+        return connectionScore;
     }
 }

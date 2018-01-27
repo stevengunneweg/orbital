@@ -7,7 +7,11 @@ public class GameManager : MonoBehaviour
 
     Player currentPlayer;
     [SerializeField]
+    Population population;
+    [SerializeField]
     LaunchPad launchPad;
+    [SerializeField]
+    PlayerInfoView playerInfoView;
 
     private void Start()
     {
@@ -18,6 +22,15 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         launchPad.OnBoughtSatellite -= BuySatellite;
+    }
+
+    private void Update()
+    {
+        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites());
+        foreach(var m in population.GetAllMinions())
+        { 
+            currentPlayer.Score.AddScore(m.GetCurrentScore());
+        }
     }
 
     public void BuySatellite(GameObject satelliteObject)

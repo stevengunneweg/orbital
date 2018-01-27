@@ -10,7 +10,7 @@ public class LaunchPad : MonoBehaviour {
     private Renderer launchpadRenderer;
     [SerializeField]
     private GameObject launchpadObject;
-    private float distanceToEarthsCrust = 2.5f;
+    private float distanceToEarthsCrust = 2.55f;
     private bool isActive = false;
     private bool isMoving = false;
     private bool isShooting = false;

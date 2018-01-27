@@ -9,7 +9,7 @@ public class Satelite : MonoBehaviour {
     int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
     List<Vector3> launchRoute = new List<Vector3>();
     GameObject pivot;
-
+    public bool SatelliteActivated { get; private set; }
     public void Spawn(List<Vector3> launchRoute)
     {
         this.launchRoute = launchRoute;
@@ -18,6 +18,7 @@ public class Satelite : MonoBehaviour {
 
         transform.position = launchRoute[0];
         DetermineDirection();
+        SatelliteActivated = true;
     }
 
     public SateliteValues GetValues()
