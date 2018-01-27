@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Satelite : MonoBehaviour {
-    
+public class Satelite : MonoBehaviour
+{
+    public delegate void EntityEvent(Satelite satelite);
+    public static event EntityEvent OnCreated;
+    public static event EntityEvent OnDestroyed;
+
+    [SerializeField]
     SateliteValues values;
     int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
     List<Vector3> launchRoute = new List<Vector3>();
@@ -13,8 +18,9 @@ public class Satelite : MonoBehaviour {
     [SerializeField]
     GameObject rocket;
     public int TeamId { get { return values.TeamId; } }
+    public bool IsPlayer { get { return values.TeamId == 1; } }
 
-	private GameObject cone;
+    private GameObject cone;
 
 	public void Spawn(List<Vector3> launchRoute)
     {
@@ -26,10 +32,18 @@ public class Satelite : MonoBehaviour {
         DetermineDirection();
         SatelliteActivated = true;
     }
+
+    private void OnDestroy()
+    {
+        if (OnDestroyed != null)
+            OnDestroyed(this);
+    }
+    
     public void SetValues(SateliteValues values)
     {
         this.values = values;
     }
+
     public SateliteValues GetValues()
     {
         return this.values;
@@ -49,8 +63,13 @@ public class Satelite : MonoBehaviour {
     }
 
 	protected void Start()
-	{
-		var coneComponent = transform.Find("Cone");
+    {
+        if (OnCreated != null)
+        {
+            OnCreated(this);
+        }
+
+        var coneComponent = transform.Find("Cone");
 		if (coneComponent != null) {
 			cone = coneComponent.gameObject;
 		}

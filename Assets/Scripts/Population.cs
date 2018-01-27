@@ -10,14 +10,18 @@ public class Population : MonoBehaviour {
     private List<Minion> allMinionsList;
     [SerializeField]
     private List<SignalTransmitter> signalTransmitters;
+    private List<Satelite> satelites;
 
 
     private void Awake()
     {
         signalTransmitters = new List<SignalTransmitter>();
         allMinionsList = new List<Minion>();
+        satelites = new List<Satelite>();
         SignalTransmitter.OnCreated += AddSignalTransmitter;
         SignalTransmitter.OnDestroyed += RemoveSignalTransmitter;
+        Satelite.OnCreated += AddSatelite;
+        Satelite.OnDestroyed += RemoveSatelite;
         Minion.OnCreated += AddMinion;
         Minion.OnDestroyed += RemoveMinion;
     }
@@ -32,6 +36,8 @@ public class Population : MonoBehaviour {
     {
         SignalTransmitter.OnCreated -= AddSignalTransmitter;
         SignalTransmitter.OnDestroyed -= RemoveSignalTransmitter;
+        Satelite.OnCreated -= AddSatelite;
+        Satelite.OnDestroyed -= RemoveSatelite;
     }
 
     public Minion[] GetAllMinions()
@@ -58,13 +64,22 @@ public class Population : MonoBehaviour {
         signalTransmitters.Remove(st);
     }
 
-    public List<SignalTransmitter> ActiveSatellites()
+    private void AddSatelite(Satelite satelite)
     {
-        return signalTransmitters.Where(st => st.GetComponent<Satelite>().SatelliteActivated && st.IsPlayer).ToList();
+        satelites.Add(satelite);
+    }
+    private void RemoveSatelite(Satelite satelite)
+    {
+        satelites.Remove(satelite);
+    }
+
+    public List<Satelite> ActivePlayerSatellites()
+    {
+        return satelites.Where(st => st.GetComponent<Satelite>().SatelliteActivated && st.IsPlayer).ToList();
     }
 
     public int NrOfSatellites()
     {
-        return ActiveSatellites().Count;
+        return ActivePlayerSatellites().Count;
     }
 }

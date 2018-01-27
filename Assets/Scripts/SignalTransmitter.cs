@@ -13,7 +13,7 @@ public class SignalTransmitter : MonoBehaviour
 
     Satelite satelite;
     public bool Activated { get { return satelite.SatelliteActivated; } }
-    public bool IsPlayer { get { return satelite.TeamId == 1; } }
+    public bool IsPlayer { get { return satelite.IsPlayer; } }
 
     static Dictionary<SignalType, List<SignalTransmitter>> instances;
     public static Dictionary<SignalType, List<SignalTransmitter>> Instances
