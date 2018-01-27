@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 [System.Serializable]
 public class SateliteValues
 {
@@ -6,28 +7,23 @@ public class SateliteValues
     [SerializeField]
     private float orbitalVelocity;
     [SerializeField]
-    private float maxTrajectoryLength;
+    private float trajectorySpeed;
     [SerializeField]
 	private float cost;
 	[SerializeField]
 	private int teamId;
     public int TeamId { get { return teamId; } }
 
-    public SateliteValues(float cost, float orbitalVelocity, float maxTrajectoryLength)
+    public SateliteValues(float cost, float orbitalVelocity, float trajectorySpeed)
     {
         this.cost = cost;
         this.orbitalVelocity = orbitalVelocity;
-        this.maxTrajectoryLength = maxTrajectoryLength;
+        this.trajectorySpeed = trajectorySpeed;
     }
 
     public float GetOrbitalVelocity()
     {
         return orbitalVelocity;
-    }
-
-    public float GetMaxTrajectoryLength()
-    {
-        return maxTrajectoryLength;
     }
 
     public float GetCost()
@@ -44,4 +40,9 @@ public class SateliteValues
 	{
 		teamId = value;
 	}
+
+    internal float GetTrajectorySpeed()
+    {
+        return trajectorySpeed;
+    }
 }

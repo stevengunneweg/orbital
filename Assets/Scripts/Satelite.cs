@@ -40,7 +40,7 @@ public class Satelite : MonoBehaviour {
 
     protected void Awake()
     {
-		values = new SateliteValues(10, 0.5f, 0.005f);
+		values = new SateliteValues(10, 0.5f, 0.05f);
 	}
 
 	protected void Start()
@@ -93,9 +93,9 @@ public class Satelite : MonoBehaviour {
         float distanceTraveled = 0;
         float distanceForTurning = 0.001f;
         distanceTraveled += Vector3.Distance(transform.position, launchRoute[0]);
-        if(distanceTraveled > values.GetMaxTrajectoryLength())
+        if(distanceTraveled > values.GetTrajectorySpeed())
         {
-            Vector3 newPosition1 = Vector3.MoveTowards(transform.position, launchRoute[0], (values.GetMaxTrajectoryLength()));
+            Vector3 newPosition1 = Vector3.MoveTowards(transform.position, launchRoute[0], (values.GetTrajectorySpeed()));
             if (Vector3.Distance(transform.position, newPosition1) > distanceForTurning)
             {
                 transform.LookAt(newPosition1);
@@ -105,9 +105,9 @@ public class Satelite : MonoBehaviour {
             transform.position = newPosition1;
             return;
         }
-        while (distanceTraveled < values.GetMaxTrajectoryLength() && launchRoute.Count > 0)
+        while (distanceTraveled < values.GetTrajectorySpeed() && launchRoute.Count > 0)
         {
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, launchRoute[0], (values.GetMaxTrajectoryLength() - distanceTraveled));
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, launchRoute[0], (values.GetTrajectorySpeed() - distanceTraveled));
             if(Vector3.Distance(transform.position,newPosition) > distanceForTurning)
             {
                 transform.LookAt(newPosition);
