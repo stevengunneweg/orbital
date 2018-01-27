@@ -85,6 +85,7 @@ public class GenerateWorld : MonoBehaviour {
                 Vector3 side = Vector3.Cross(citypos, Vector3.forward);
                 go.transform.position = pos+((side.normalized*0.2f)*(Random.value-0.5f)) - Vector3.forward * 0.15f;
                 go.transform.up = citypos;
+                go.transform.SetParent(transform);
             }
         }
     }
@@ -98,6 +99,7 @@ public class GenerateWorld : MonoBehaviour {
                 Vector3 pos = CalculatePos(z_vertices[index], go);
                 go.transform.position = go.transform.position+Vector3.forward*0.5f;
                 cityPos.Add(pos);
+                go.transform.SetParent(transform);
 
             }
         }
