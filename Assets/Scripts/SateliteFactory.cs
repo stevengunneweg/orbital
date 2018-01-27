@@ -39,9 +39,8 @@ public class SateliteFactory : MonoBehaviour
                 break;
 			case SatelliteType.Default:
 			case SatelliteType.Transmit:
-				MakeTransmitSatelite(_base);
-				break;
             default:
+                MakeTransmitSatelite(_base);
                 AddTransmissionGraphics(_base);
                 break;
         }
@@ -111,6 +110,8 @@ public class SateliteFactory : MonoBehaviour
 		cone.transform.localRotation = Quaternion.Euler(new Vector3(90, 0, 0));
 		// Set Material
 		cone.GetComponent<MeshRenderer>().sharedMaterial = Factory.coneMaterial;
+		// Hide cone initially
+		cone.GetComponent<Renderer>().enabled = false;
 	}
 
 	[Header("Indestructable Satelite Values")]

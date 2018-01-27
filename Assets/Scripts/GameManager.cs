@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour {
         currentSatelliteType = SateliteFactory.SatelliteType.Default;
     }
 
+    public void ChangeToTransmissionSatellite()
+    {
+        currentSatelliteType = SateliteFactory.SatelliteType.Transmit;
+    }
+
     public void ChangeToRailgunSatellite()
     {
         currentSatelliteType = SateliteFactory.SatelliteType.Railgun;
