@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(Satelite))]
 public class SignalTransmitter : MonoBehaviour
 {
     public delegate void EntityEvent(SignalTransmitter transmitter);
     public static event EntityEvent OnCreated;
     public static event EntityEvent OnDestroyed;
+
+    Satelite satelite;
+    public bool Activated { get { return satelite.SatelliteActivated; } }
 
     static Dictionary<SignalType, List<SignalTransmitter>> instances;
     public static Dictionary<SignalType, List<SignalTransmitter>> Instances
@@ -47,6 +52,7 @@ public class SignalTransmitter : MonoBehaviour
         }
 
         ConnectedMinions = new HashSet<Minion>();
+        satelite = GetComponent<Satelite>();
 
         Instances[signalType].Add(this);
         if (Planet == null)
@@ -55,7 +61,7 @@ public class SignalTransmitter : MonoBehaviour
             if (planetGameObject != null)
                 this.Planet = planetGameObject.transform;
         }
-	}
+    }
 
     private void OnDestroy()
     {
@@ -68,11 +74,14 @@ public class SignalTransmitter : MonoBehaviour
     {
         this.population = pop;
     }
-	
-	// Update is called once per frame
-	private void LateUpdate ()
+
+    // Update is called once per frame
+    private void LateUpdate()
     {
-        ConnectedMinions = findConnectedReceivers();        
+        if (!Activated)
+            ConnectedMinions.Clear();
+        else
+            ConnectedMinions = findConnectedReceivers();
     }
 
     private void Update()
@@ -85,23 +94,31 @@ public class SignalTransmitter : MonoBehaviour
         Vector2 planetDirection = (Vector2)Planet.position - (Vector2)transform.position;
         if (Vector2.Dot(planetDirection, (Vector2)Planet.position - (Vector2)receiver.transform.position) < 0)
             return false;
-        
+
         Vector2 receiverDirection = (Vector2)receiver.transform.position - (Vector2)transform.position;
 
-        float planetAngle = Mathf.Atan2(planetDirection.y, planetDirection.x)*MathUtils.RADIUS2DEGREE;
-        float receiverAngle = Mathf.Atan2(receiverDirection.y, receiverDirection.x)*MathUtils.RADIUS2DEGREE;
+        float planetAngle = Mathf.Atan2(planetDirection.y, planetDirection.x) * MathUtils.RADIUS2DEGREE;
+        float receiverAngle = Mathf.Atan2(receiverDirection.y, receiverDirection.x) * MathUtils.RADIUS2DEGREE;
 
         if (Mathf.Abs(MathUtils.AngleDifference(planetAngle, receiverAngle)) > broadcastRadius)
             return false;
 
-        line.positionCount += 2;
+        Vector2 rayStart = transform.position;
+        Vector2 rayEnd = (Vector2)(receiver.transform.position - Planet.position).normalized * (Planet.GetComponentInChildren<CircleCollider2D>().radius + 0.01f);
+        Vector2 direction = (rayEnd - rayStart);
+        float distance = direction.magnitude;
+        direction.Normalize();
+        var hits = Physics2D.RaycastAll(transform.position, direction, distance);
+        if (hits.Any(hit => hit.transform != transform && hit.transform != receiver.transform))
+        {
+            return false;
+        }
+		line.positionCount += 2;
         line.SetPosition(line.positionCount - 2, transform.position + new Vector3(0,0,0.5f));
         line.SetPosition(line.positionCount - 1, receiver.transform.position);
-
-
         return true;
     }
-    
+
     private HashSet<Minion> findConnectedReceivers()
     {
         HashSet<Minion> connectedReceivers = new HashSet<Minion>();
@@ -111,5 +128,5 @@ public class SignalTransmitter : MonoBehaviour
         return connectedReceivers;
     }
 
-    
+
 }

@@ -28,7 +28,7 @@ public class TransmitterConnector : MonoBehaviour
 
     SignalType signalType { get { return Transmitter.SignalType; } }
     
-    void Start()
+    void Awake()
     {
         Transmitter = GetComponent<SignalTransmitter>();
         Connections = new HashSet<TransmitterConnector>();
@@ -89,6 +89,9 @@ public class TransmitterConnector : MonoBehaviour
         List<HashSet<TransmitterConnector>> groups = new List<HashSet<TransmitterConnector>>();
         foreach (var transmitter in Instances[signalType])
         {
+            if (!transmitter.Transmitter.Activated)
+                continue;
+
             List<int> connections = new List<int>();
             for (int i = 0; i < groups.Count; ++i)
                 if (isInSight(groups[i]))

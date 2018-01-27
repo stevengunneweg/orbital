@@ -68,6 +68,9 @@ public class Minion : MonoBehaviour
         HashSet<SignalTransmitter> connectedTransmitters = new HashSet<SignalTransmitter>();
         foreach (SignalTransmitter signalTransmitter in SignalTransmitter.Instances[signalType])
         {
+            if (!signalTransmitter.Activated)
+                continue;
+
             if (signalTransmitter.ConnectedMinions.Contains(this))
                 if (!connectedTransmitters.Contains(signalTransmitter))
                     connectedTransmitters.Add(signalTransmitter);
