@@ -13,6 +13,7 @@ public class Satelite : MonoBehaviour {
 	public bool SatelliteActivated { get; private set; }
     [SerializeField]
     GameObject rocket;
+    public int TeamId { get { return values.TeamId; } }
 
 	private GameObject cone;
 

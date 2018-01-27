@@ -60,7 +60,7 @@ public class Population : MonoBehaviour {
 
     public List<SignalTransmitter> ActiveSatellites()
     {
-        return signalTransmitters.Where(st => st.GetComponent<Satelite>().SatelliteActivated).ToList();
+        return signalTransmitters.Where(st => st.GetComponent<Satelite>().SatelliteActivated && st.IsPlayer).ToList();
     }
 
     public int NrOfSatellites()

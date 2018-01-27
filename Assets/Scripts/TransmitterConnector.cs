@@ -89,7 +89,7 @@ public class TransmitterConnector : MonoBehaviour
         List<HashSet<TransmitterConnector>> groups = new List<HashSet<TransmitterConnector>>();
         foreach (var transmitter in Instances[signalType])
         {
-            if (!transmitter.Transmitter.Activated)
+            if (!transmitter.Transmitter.Activated || !transmitter.Transmitter.IsPlayer)
                 continue;
 
             List<int> connections = new List<int>();
