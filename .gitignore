@@ -35,3 +35,7 @@ sysinfo.txt
 *.unitypackage
 *.sln
 *.csproj
+
+# Generated cone prefabs\
+Assets/Cones
+Assets/Cones.meta
