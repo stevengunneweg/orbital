@@ -65,8 +65,8 @@ Material:
     - _GlossyReflections: 1
     - _MaxDepth: 2.689
     - _Metallic: 0
-    - _MidDepth: 2.494
-    - _MinDepth: 2.412
+    - _MidDepth: 2.4
+    - _MinDepth: 2.29
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
