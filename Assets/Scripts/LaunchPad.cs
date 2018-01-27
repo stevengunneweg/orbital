@@ -100,6 +100,17 @@ public class LaunchPad : MonoBehaviour {
         }
     }
 
+    private bool CheckForClear()
+    {
+        if (Vector3.Distance(GetMouseWorldPosition(), Vector3.zero) < Vector3.Distance(Vector3.zero, launchpadObject.transform.position))
+        {
+            trajectoryPositions = new List<Vector3>();
+            lineRenderer.positionCount = trajectoryPositions.Count;
+            lineRenderer.SetPositions(trajectoryPositions.ToArray());
+            return true;
+        }
+        return false;
+    }
 
     public void Clear()
     {
@@ -115,9 +126,12 @@ public class LaunchPad : MonoBehaviour {
         if (trajectoryPositions.Count == 0) {
             trajectoryPositions.Add(launchpadObject.transform.position);
         }
-
-		// Calculate currently drawn trajectory length
-		float length = 0.0f;
+        if(CheckForClear())
+        {
+            return;
+        }
+        // Calculate currently drawn trajectory length
+        float length = 0.0f;
 		for (int i = 1; i < trajectoryPositions.Count; i++) {
 			length += Vector3.Distance(trajectoryPositions[i - 1], trajectoryPositions[i]);
 		}
