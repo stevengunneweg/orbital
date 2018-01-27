@@ -54,11 +54,13 @@ public class Satelite : MonoBehaviour {
             distanceTraveled += Vector3.Distance(transform.position, launchRoute[0]);
 
 
-            if (transform.position == launchRoute[0])
+			if (transform.position == launchRoute[0]) {
                 launchRoute.RemoveAt(0);
+			}
         }
 
-
+		transform.LookAt(new Vector3(0, 0, transform.position.z));
+		transform.Rotate(new Vector3(-90, 0, 0));
+		transform.Rotate(new Vector3(0, -90, 0));
     }
-
 }
