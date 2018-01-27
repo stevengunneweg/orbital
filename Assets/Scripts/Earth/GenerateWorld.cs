@@ -38,12 +38,6 @@ public class GenerateWorld : MonoBehaviour {
         Generate();
     }
 	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKey(KeyCode.G))
-            Generate();
-
-    }
     void Generate()
     {
         Vector3[] vertices = _meshfilter.mesh.vertices;
