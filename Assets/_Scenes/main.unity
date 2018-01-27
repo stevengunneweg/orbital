@@ -1313,7 +1313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 269.26, y: -276.805}
+  m_AnchoredPosition: {x: 269.26172, y: -276.805}
   m_SizeDelta: {x: 498.9, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &518921892
@@ -3992,18 +3992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c9b1625453f0b4fb572272ce2b8aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allMinions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  allMinionsList: []
   signalTransmitters: []
 --- !u!1 &1606696233
 GameObject:
@@ -6110,7 +6099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 269.26, y: -369}
+  m_AnchoredPosition: {x: 269.26172, y: -369}
   m_SizeDelta: {x: 498.9, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2090867224
