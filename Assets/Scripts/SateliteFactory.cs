@@ -18,10 +18,17 @@ public class SateliteFactory : MonoBehaviour {
     [Header("Base")]
     public GameObject sateliteBasePrefab;
 
-    public static GameObject FabricateDefaultSatelite()
+    private static GameObject Base()
     {
         var instance = Instantiate(Factory.sateliteBasePrefab);
         instance.name = "Default Satelite";
+        instance.transform.position = new Vector3(1, 1, 1) * 10000;
+        return instance;
+    }
+
+    public static GameObject FabricateDefaultSatelite()
+    {
+        var instance = Base();
         return instance;
     }
 
@@ -31,8 +38,7 @@ public class SateliteFactory : MonoBehaviour {
 
     public static GameObject FabricateIndestructableSatelite()
     {
-        var instance = FabricateDefaultSatelite();
-        instance.name = "Indestructable Satelite";
+        var instance = Base();
         instance.GetComponent<Health>().IncreaseHealth(Factory.indestructableHealth);
         return instance;
     }
@@ -44,8 +50,7 @@ public class SateliteFactory : MonoBehaviour {
 
     public static GameObject FabricateRailgunSatelite()
     {
-        var instance = FabricateDefaultSatelite();
-        instance.name = "Railgun Satelite";
+        var instance = Base();
 
         var railgun = instance.AddComponent<RailgunModule>();
         railgun.rotationSpeed = Factory.railgunRotationSpeed;
