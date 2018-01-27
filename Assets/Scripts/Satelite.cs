@@ -38,6 +38,11 @@ public class Satelite : MonoBehaviour
         if (OnDestroyed != null)
             OnDestroyed(this);
     }
+    
+    public void SetValues(SateliteValues values)
+    {
+        this.values = values;
+    }
 
     public SateliteValues GetValues()
     {
@@ -51,7 +56,8 @@ public class Satelite : MonoBehaviour
 
     protected void Awake()
     {
-		values = new SateliteValues(10, 0.5f, 0.05f);
+        if(values == null)
+		values = new SateliteValues(50, 0.5f, 0.05f);
 	}
 
 	protected void Start()
