@@ -37,5 +37,5 @@ sysinfo.txt
 *.csproj
 
 # Generated cone prefabs\
-Assets/Cones
-Assets/Cones.meta
+Assets/Cones/*
+!Assets/Cones/.keep
