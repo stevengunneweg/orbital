@@ -16,9 +16,14 @@ public class GameManager : MonoBehaviour {
     public SateliteFactory.SatelliteType currentSatelliteType;
     public float currentSatelliteCost = 125;
 
-    public void ChangeToDefaultSatellite()
+    public void ChangeToDefensiveSatellite()
     {
-        currentSatelliteType = SateliteFactory.SatelliteType.Default;
+        currentSatelliteType = SateliteFactory.SatelliteType.Defense;
+    }
+
+    public void ChangeToSelfRepairingSatellite()
+    {
+        currentSatelliteType = SateliteFactory.SatelliteType.SelfRepairing;
     }
 
     public void ChangeToTransmissionSatellite()
@@ -28,7 +33,7 @@ public class GameManager : MonoBehaviour {
 
     public void ChangeToRailgunSatellite()
     {
-        currentSatelliteType = SateliteFactory.SatelliteType.Railgun;
+        currentSatelliteType = SateliteFactory.SatelliteType.Attack;
     }
 
     private void Start()

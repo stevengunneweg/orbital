@@ -16,7 +16,7 @@ public class PlayerInfoView : MonoBehaviour {
     {
         this.money.text = "$" + string.Format("{00:00}", money);
         this.nrOfSatellites.text = "x" + nrOfSatellites.ToString();
-        this.currentSatelliteName.text = satelliteName + "($" + satellitePrice.ToString("0") + ")";
+        this.currentSatelliteName.text = satelliteName + " ($" + satellitePrice.ToString("0") + ")";
     }
 
 }

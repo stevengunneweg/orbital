@@ -36,6 +36,11 @@ public class SateliteValues
 		return teamId;
 	}
 
+    public void SetCost(float cost)
+    {
+        this.cost = cost;
+    }
+
 	public void SetTeamId(int value)
 	{
 		teamId = value;

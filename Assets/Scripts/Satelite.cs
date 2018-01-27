@@ -43,8 +43,10 @@ public class Satelite : MonoBehaviour {
     protected void Awake()
     {
         if(values == null)
-		values = new SateliteValues(50, 0.5f, 0.05f);
-	}
+		    values = new SateliteValues(50, 0.5f, 0.05f);
+        currentOrbitalVelocity = values.GetTrajectorySpeed();
+
+    }
 
 	protected void Start()
 	{

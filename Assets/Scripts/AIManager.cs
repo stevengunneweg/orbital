@@ -27,7 +27,7 @@ public class AIManager : MonoBehaviour {
 
     void SpawnSatallite()
     {
-        GameObject go = SateliteFactory.From(SateliteFactory.SatelliteType.Railgun, 2);
+        GameObject go = SateliteFactory.From(SateliteFactory.SatelliteType.Attack, 2);
         Vector3 startPosition = Quaternion.Euler(0,0,(Random.value*360))* (Vector3.up * 2.7f);
         Vector3 endPosition = startPosition+ (startPosition.normalized*(0.3f+Random.value*4));
         List<Vector3> trajectoryList = new List<Vector3>();

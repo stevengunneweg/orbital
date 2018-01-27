@@ -3481,7 +3481,7 @@ MonoBehaviour:
   population: {fileID: 1531593531}
   launchPad: {fileID: 1647635519}
   playerInfoView: {fileID: 414976772}
-  currentSatelliteType: 1
+  currentSatelliteType: 0
   currentSatelliteCost: 125
 --- !u!4 &1531593530
 Transform:
@@ -4246,7 +4246,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1531593529}
-        m_MethodName: ChangeToDefaultSatellite
+        m_MethodName: ChangeToDefensiveSatellite
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

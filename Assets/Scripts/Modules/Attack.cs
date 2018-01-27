@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RailgunModule : MonoBehaviour {
+public class Attack : MonoBehaviour {
 
     public float angle;
     public float rotationSpeed = 1f;

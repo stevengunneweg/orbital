@@ -7,11 +7,26 @@ public class SateliteFactory : MonoBehaviour
 
     public enum SatelliteType
     {
-		Default,
 		Transmit,
-        Railgun,
-        Shield,
+        Attack,
+        Defense,
         SelfRepairing
+    }
+
+    public float TypeToCost(SatelliteType type)
+    {
+        switch (type)
+        {
+            case SatelliteType.SelfRepairing:
+                return 300f;
+            case SatelliteType.Attack:
+                return 125f;
+            case SatelliteType.Defense:
+                return 200f;
+            case SatelliteType.Transmit:
+            default:
+                return 100f;
+        }
     }
 
     private static SateliteFactory _factory;
@@ -31,68 +46,47 @@ public class SateliteFactory : MonoBehaviour
 
     public static GameObject From(SatelliteType type, int teamId = defaultTeamId)
     {
-        var _base = Base(teamId);
+        var _base = Base(teamId, Factory.TypeToCost(type));
 
         switch (type)
         {
-            case SatelliteType.Railgun:
-                MakeRailgun(_base);
-                AddAttGraphics(_base);
+            case SatelliteType.Attack:
+                MakeAttackSatellite(_base);
                 break;
             case SatelliteType.SelfRepairing:
                 SelfRepairingTransmitSatelite(_base);
                 break;
-            case SatelliteType.Shield:
+            case SatelliteType.Defense:
                 MakeDefenseSatelite(_base);
                 break;
-            case SatelliteType.Default:
 			case SatelliteType.Transmit:
             default:
                 MakeTransmitSatelite(_base);
-                AddTransmissionGraphics(_base);
                 break;
         }
 
         return _base;
     }
 
-    [Header("Graphics")]
-    public GameObject graphics_satellite_att;
-    public GameObject graphics_satellite_def;
-    public GameObject graphics_satellite_trans;
-
-    public static void AddAttGraphics(GameObject _base)
-    {
-        AddGraphics(_base, Factory.graphics_satellite_att);
-    }
-
-    public static void AddDefGraphics(GameObject _base)
-    {
-        AddGraphics(_base, Factory.graphics_satellite_def);
-    }
-
-    public static void AddTransmissionGraphics(GameObject _base)
-    {
-        AddGraphics(_base, Factory.graphics_satellite_trans);
-    }
-
-    private static void AddGraphics(GameObject _base, GameObject graphics)
+    private static void AddChild(GameObject _base, GameObject child)
     {
         var parent = _base.transform;
-        var instance = Instantiate(graphics, parent, false);
+        var instance = Instantiate(child, parent, false);
     }
 
-	private static GameObject Base(int teamId = defaultTeamId)
+	private static GameObject Base(int teamId, float cost)
     {
         var instance = Instantiate(Factory.sateliteBasePrefab);
-        instance.name = "Default Satelite";
+        instance.name = Factory.sateliteBasePrefab.name;
 		instance.transform.position = new Vector3(1, 1, 1) * 10000;
 		instance.GetComponent<Satelite>().SetTeamId(teamId);
+        instance.GetComponent<Satelite>().GetValues().SetCost(cost);
         return instance;
     }
 
 	[Header("Transmit Satelite Values")]
-	public Material coneMaterial;
+    public GameObject graphics_satellite_trans;
+    public Material coneMaterial;
 	public float broadcastRadius = 15;
 
 	public static void MakeTransmitSatelite(GameObject _base)
@@ -120,58 +114,52 @@ public class SateliteFactory : MonoBehaviour
 		cone.GetComponent<MeshRenderer>().sharedMaterial = Factory.coneMaterial;
 		// Hide cone initially
 		cone.GetComponent<Renderer>().enabled = false;
-        _base.GetComponent<Satelite>().SetValues(new SateliteValues(100, 0.5f, 0.05f));
+        AddChild(_base, Factory.graphics_satellite_trans);
     }
 
-	[Header("Indestructable Satelite Values")]
-	public int indestructableHealth = 9999;
-
-	public static void MakeIndestructableSatelite(GameObject _base)
-	{
-		_base.name = "Indestructable Satelite";
-		_base.GetComponent<Health>().IncreaseHealth(Factory.indestructableHealth);
-	}
-
-    [Header("Railgun Satelite Values")]
+    [Header("Attack Satelite Values")]
+    public GameObject graphics_satellite_att;
     public GameObject railgunBulletPrefab;
     public float railgunRotationSpeed = 1f;
     public float railgunReloadDuration = 1f;
 
-	public static void MakeRailgun(GameObject _base)
+	public static void MakeAttackSatellite(GameObject _base)
     {
-        _base.name = "Railgun Satelite";
+        _base.name = "Attack Satelite";
 
-        // Check if it already has a railgun
-        if (_base.GetComponent<RailgunModule>() != null)
-            return;
-
-        var railgun = _base.AddComponent<RailgunModule>();
+        var railgun = _base.AddComponent<Attack>();
         railgun.rotationSpeed = Factory.railgunRotationSpeed;
         railgun.reloadDuration = Factory.railgunReloadDuration;
         railgun.bulletPrefab = Factory.railgunBulletPrefab;
-        _base.GetComponent<Satelite>().SetValues(new SateliteValues(150, 0.5f, 0.05f));
+
+        AddChild(_base, Factory.graphics_satellite_att);
     }
+
+    [Header("Defensive Satelite Values")]
+    public GameObject graphics_satellite_def;
+    public int defensiveExtraShieldCount = 3;
 
     public static void MakeDefenseSatelite(GameObject _base)
     {
         _base.name = "Defense Satelite";
 
-        // Check if it already has a railgun
-        if (_base.GetComponent<RailgunModule>() != null)
-            return;
-        //Add 50 health 3 times
-        for(int i=0; i<3; i++)
+        //Add 50 health 'defensiveExtraShieldCount' times
+        for (int i = 0; i < Factory.defensiveExtraShieldCount; i++)
         {
             _base.AddComponent<Shielding>();
         }
-        _base.GetComponent<Satelite>().SetValues(new SateliteValues(150, 0.5f, 0.05f));
+
+        AddChild(_base, Factory.graphics_satellite_def);
     }
+
+    [Header("Repair Satelite Values")]
+    public GameObject graphics_satellite_repair;
 
     public static void SelfRepairingTransmitSatelite(GameObject _base)
     {
         _base.name = "Self Repairing Transmit";
         MakeTransmitSatelite(_base);
         _base.AddComponent<Repairing>();
-        _base.GetComponent<Satelite>().SetValues(new SateliteValues(200, 0.5f, 0.05f));
+        AddChild(_base, Factory.graphics_satellite_trans);
     }
 }
