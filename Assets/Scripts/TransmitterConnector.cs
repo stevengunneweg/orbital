@@ -28,17 +28,31 @@ public class TransmitterConnector : MonoBehaviour
 
     SignalType signalType { get { return Transmitter.SignalType; } }
     
-    void Start()
+    void Awake()
     {
         Transmitter = GetComponent<SignalTransmitter>();
         Connections = new HashSet<TransmitterConnector>();
 
-        Instances[signalType].Add(this);
+        if (isActiveAndEnabled)
+            Instances[signalType].Add(this);
+    }
+
+    void OnEnable()
+    {
+        if (!Instances[signalType].Contains(this))
+            Instances[signalType].Add(this);
+    }
+
+    void OnDisable()
+    {
+        if (Instances[signalType].Contains(this))
+            Instances[signalType].Remove(this);
     }
 
     void OnDestroy()
     {
-        Instances[signalType].Remove(this);
+        if (Instances[signalType].Contains(this))
+            Instances[signalType].Remove(this);
     }
 
     static bool isFirstObjectToUpdate = true;
