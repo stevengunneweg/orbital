@@ -45,7 +45,12 @@ public class Minion : MonoBehaviour
         foreach (SignalType signalType in Enum.GetValues(typeof(SignalType)))
         {
             connectionScore += calculateScore(signalType) * Time.deltaTime * 0.03f;
-            if(calculateScore(signalType) * Time.deltaTime * 0.03f > 0) GameObject.Instantiate(plusParticle, transform.position, Quaternion.identity);
+            if (calculateScore(signalType) * Time.deltaTime * 0.03f > 0.0f)
+            {
+                if(UnityEngine.Random.value < 0.05f)
+                GameObject.Instantiate(plusParticle, transform.position, Quaternion.identity);
+            }
+
         }
     }
 

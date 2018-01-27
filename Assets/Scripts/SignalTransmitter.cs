@@ -34,17 +34,19 @@ public class SignalTransmitter : MonoBehaviour
     public HashSet<Minion> ConnectedMinions { get; private set; }
 
     [SerializeField]
-    private double broadcastRadius = 20; //In degrees
+    public double broadcastRadius = 20; //In degrees
     [SerializeField]
-    private SignalType signalType;
+    public SignalType signalType;
     public SignalType SignalType { get { return signalType; } }
     public Transform Planet;
 
+    [SerializeField]
+    LineRenderer line;
+
 
     // Use this for initialization
-    private void Start()
-    {
-        if (OnCreated != null)
+    private void Start () {
+        if(OnCreated!=null)
         {
             OnCreated(this);
         }
@@ -82,6 +84,11 @@ public class SignalTransmitter : MonoBehaviour
             ConnectedMinions = findConnectedReceivers();
     }
 
+    private void Update()
+    {
+        line.positionCount = 0;
+    }
+
     public bool SignalReaches(Minion receiver)
     {
         Vector2 planetDirection = (Vector2)Planet.position - (Vector2)transform.position;
@@ -106,7 +113,9 @@ public class SignalTransmitter : MonoBehaviour
         {
             return false;
         }
-
+		line.positionCount += 2;
+        line.SetPosition(line.positionCount - 2, transform.position + new Vector3(0,0,0.5f));
+        line.SetPosition(line.positionCount - 1, receiver.transform.position);
         return true;
     }
 

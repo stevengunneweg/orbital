@@ -1274,6 +1274,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114144055374708508, guid: 154ddcd8d4b7fdc4b937611f763dcdee,
+        type: 2}
+      propertyPath: coneMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c5da270859141b4391ba829cab73206, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 154ddcd8d4b7fdc4b937611f763dcdee, type: 2}
   m_IsPrefabParent: 0
@@ -1313,7 +1318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 269.26, y: -276.805}
+  m_AnchoredPosition: {x: 269.26172, y: -276.805}
   m_SizeDelta: {x: 498.9, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &518921892
@@ -6164,7 +6169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 269.26, y: -369}
+  m_AnchoredPosition: {x: 269.26172, y: -369}
   m_SizeDelta: {x: 498.9, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2090867224

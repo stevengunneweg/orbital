@@ -12,6 +12,8 @@ public class Satelite : MonoBehaviour {
 	float currentOrbitalVelocity = 0.05f;
 	public bool SatelliteActivated { get; private set; }
 
+	private GameObject cone;
+
 	public void Spawn(List<Vector3> launchRoute)
     {
         this.launchRoute = launchRoute;
@@ -36,7 +38,15 @@ public class Satelite : MonoBehaviour {
     protected void Awake()
     {
 		values = new SateliteValues(10, 0.5f, 0.005f);
-    }
+	}
+
+	protected void Start()
+	{
+		var coneComponent = transform.Find("Cone");
+		if (coneComponent != null) {
+			cone = coneComponent.gameObject;
+		}
+	}
     private void Update()
     {
 		if (launchRoute.Count != 0) {
@@ -93,5 +103,10 @@ public class Satelite : MonoBehaviour {
 		transform.LookAt(new Vector3(0, 0, transform.position.z));
 		transform.Rotate(new Vector3(-90, 0, 0));
 		transform.Rotate(new Vector3(0, -90, 0));
+
+		// Resize cone
+		if (cone != null) {
+			cone.transform.localScale = Vector3.one * transform.position.magnitude;
+		}
     }
 }
