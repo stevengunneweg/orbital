@@ -11,7 +11,7 @@ public static class MathUtils
     {
         float difference = (angleA - angleB + 360) % 180;
         if (difference > 180)
-            difference -= 180;
+            difference = (difference + 180)%360;
         return difference;
     }
 }
