@@ -95,7 +95,7 @@ public class TransmitterConnector : MonoBehaviour
 
             List<int> connections = new List<int>();
             for (int i = 0; i < groups.Count; ++i)
-                if (isInSight(groups[i]))
+                if (transmitter.isInSight(groups[i]))
                     connections.Add(i);
             if (connections.Count == 0)
                 groups.Add(new HashSet<TransmitterConnector> { transmitter });
