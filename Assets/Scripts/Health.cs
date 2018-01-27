@@ -9,7 +9,7 @@ public class Health : MonoBehaviour {
 
     public void IncreaseHealth(int amount)
     {
-        this.amount -= amount;
+        this.amount += amount;
     }
     public void DecreaseHealth(int amount)
     {
