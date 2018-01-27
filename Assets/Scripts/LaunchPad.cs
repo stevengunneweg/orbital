@@ -17,8 +17,8 @@ public class LaunchPad : MonoBehaviour {
     private bool isShooting = false;
     [SerializeField]
     private LineRenderer lineRenderer;
-	[SerializeField]
-	private float maxDrawingDistance = 2.0f;
+	//[SerializeField]
+	private float maxDrawingDistance = 6.0f;
 
     GameObject satObject = null;
 

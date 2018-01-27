@@ -4,30 +4,24 @@ using UnityEngine;
 
 public class AIManager : MonoBehaviour {
 
-    float difficultyTimer_max = 200;
-    float difficultyTimer_cur = 0;
-    float stageTimer_max = 5;
-    float stageTimer_cur = 0;
-    int stage = 1;
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (difficultyTimer_cur <= difficultyTimer_max)
-            difficultyTimer_cur += Time.deltaTime;
-        if (stageTimer_cur <= stageTimer_max)
-            stageTimer_cur += Time.deltaTime;
-        else
+    int secondsTillNextEnemy = 30;
+
+    private void Start()
+    {
+        StartCoroutine(WaitForEnemy());
+    }
+
+
+    IEnumerator WaitForEnemy()
+    {
+        while (true)
         {
-            stage++;
-            if(stage<=15)
-                stageTimer_cur = 0;
-        }
-        if (CanISpawn())
+            yield return new WaitForSeconds(secondsTillNextEnemy);
+            secondsTillNextEnemy -= 2;
+            if (secondsTillNextEnemy < 3) secondsTillNextEnemy = 3;
             SpawnSatallite();
+        }
+        
 
     }
 
@@ -40,15 +34,5 @@ public class AIManager : MonoBehaviour {
         trajectoryList.Add(startPosition);
         trajectoryList.Add(endPosition);
         go.GetComponent<Satelite>().Spawn(trajectoryList);
-    }
-
-    bool CanISpawn()
-    {
-        //Debug.Log("Random.value: " + Random.value +"<"+ SpawnChance()+" stage: "+stage+" true: "+(Random.value < SpawnChance()));
-        return Random.value < SpawnChance();
-    }
-    float SpawnChance()
-    {
-        return (0.001f * (float)(stage));
     }
 }

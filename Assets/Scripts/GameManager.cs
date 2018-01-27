@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        currentPlayer = new Player(50);
+        currentPlayer = new Player(150);
         launchPad.OnBoughtSatellite += BuySatellite;
     }
 
