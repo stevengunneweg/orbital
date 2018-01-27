@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 50742797222169954}
   - component: {fileID: 58515917081142498}
   - component: {fileID: 114245668391375044}
+  - component: {fileID: 114844919889857564}
   m_Layer: 0
   m_Name: BaseSatelitePrefab
   m_TagString: Untagged
@@ -124,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   broadcastRadius: 32
   signalType: 0
+  Planet: {fileID: 0}
 --- !u!114 &114375211566705186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -176,6 +178,17 @@ MonoBehaviour:
     orbitalVelocity: 0
     maxTrajectoryLength: 0
     cost: 0
+--- !u!114 &114844919889857564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1251501229717162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9949d377616b9a444a47b5671df57306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212229824376339860
 SpriteRenderer:
   m_ObjectHideFlags: 1

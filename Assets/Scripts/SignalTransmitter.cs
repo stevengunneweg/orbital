@@ -33,8 +33,8 @@ public class SignalTransmitter : MonoBehaviour
     [SerializeField]
     private SignalType signalType;
     public SignalType SignalType { get { return signalType; } }
-    
-    private Transform planet;
+    public Transform Planet;
+
 
 	// Use this for initialization
 	private void Start () {
@@ -46,11 +46,11 @@ public class SignalTransmitter : MonoBehaviour
         ConnectedMinions = new HashSet<Minion>();
 
         Instances[signalType].Add(this);
-        if (planet == null)
+        if (Planet == null)
         {
             GameObject planetGameObject = GameObject.Find("Earth");
             if (planetGameObject != null)
-                this.planet = planetGameObject.transform;
+                this.Planet = planetGameObject.transform;
         }
 	}
 
@@ -74,8 +74,8 @@ public class SignalTransmitter : MonoBehaviour
 
     public bool SignalReaches(Minion receiver)
     {
-        Vector2 planetDirection = (Vector2)planet.position - (Vector2)transform.position;
-        if (Vector2.Dot(planetDirection, (Vector2)planet.position - (Vector2)receiver.transform.position) < 0)
+        Vector2 planetDirection = (Vector2)Planet.position - (Vector2)transform.position;
+        if (Vector2.Dot(planetDirection, (Vector2)Planet.position - (Vector2)receiver.transform.position) < 0)
             return false;
         
         Vector2 receiverDirection = (Vector2)receiver.transform.position - (Vector2)transform.position;
@@ -97,4 +97,6 @@ public class SignalTransmitter : MonoBehaviour
                 connectedReceivers.Add(receiver);
         return connectedReceivers;
     }
+
+    
 }
