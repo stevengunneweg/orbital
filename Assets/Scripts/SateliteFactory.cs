@@ -26,11 +26,6 @@ public class SateliteFactory : MonoBehaviour
     [Header("Base")]
     public GameObject sateliteBasePrefab;
 
-    [Header("Graphics")]
-    public GameObject graphics_satellite_att;
-    public GameObject graphics_satellite_def;
-    public GameObject graphics_satellite_gun;
-
     public static GameObject From(SatelliteType type, int teamId = defaultTeamId)
     {
         var _base = Base(teamId);
@@ -39,13 +34,41 @@ public class SateliteFactory : MonoBehaviour
         {
             case SatelliteType.Railgun:
                 MakeRailgun(_base);
+                AddAttGraphics(_base);
                 break;
             case SatelliteType.Default:
             default:
+                AddTransmissionGraphics(_base);
                 break;
         }
 
         return _base;
+    }
+
+    [Header("Graphics")]
+    public GameObject graphics_satellite_att;
+    public GameObject graphics_satellite_def;
+    public GameObject graphics_satellite_trans;
+
+    public static void AddAttGraphics(GameObject _base)
+    {
+        AddGraphics(_base, Factory.graphics_satellite_att);
+    }
+
+    public static void AddDefGraphics(GameObject _base)
+    {
+        AddGraphics(_base, Factory.graphics_satellite_def);
+    }
+
+    public static void AddTransmissionGraphics(GameObject _base)
+    {
+        AddGraphics(_base, Factory.graphics_satellite_trans);
+    }
+
+    private static void AddGraphics(GameObject _base, GameObject graphics)
+    {
+        var parent = _base.transform;
+        var instance = Instantiate(graphics, parent, false);
     }
 
 	private static GameObject Base(int teamId = defaultTeamId)
