@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Satelite))]
@@ -90,6 +91,17 @@ public class SignalTransmitter : MonoBehaviour
 
         if (Mathf.Abs(MathUtils.AngleDifference(planetAngle, receiverAngle)) > broadcastRadius)
             return false;
+
+        Vector2 rayStart = transform.position;
+        Vector2 rayEnd = (Vector2)(receiver.transform.position-Planet.position).normalized * (Planet.GetComponentInChildren<CircleCollider2D>().radius+0.01f);
+        Vector2 direction = (rayEnd - rayStart);
+        float distance = direction.magnitude;
+        direction.Normalize();
+        var hits = Physics2D.RaycastAll(transform.position, direction, distance);
+        if (hits.Any(hit => hit.transform != transform && hit.transform != receiver.transform))
+        {
+            return false;
+        }
 
         return true;
     }
