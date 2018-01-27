@@ -61,6 +61,8 @@ public class SignalTransmitter : MonoBehaviour
             if (planetGameObject != null)
                 this.Planet = planetGameObject.transform;
         }
+
+		line = GetComponent<LineRenderer>();
     }
 
     private void OnDestroy()
