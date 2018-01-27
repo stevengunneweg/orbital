@@ -8,9 +8,11 @@ public class Satelite : MonoBehaviour {
     SateliteValues values;
     int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
     List<Vector3> launchRoute = new List<Vector3>();
-    GameObject pivot;
-	float currentOrbitalVelocity = 0.1f;
-	public bool SatelliteActivated { get; private set; }    public void Spawn(List<Vector3> launchRoute)
+	GameObject pivot;
+	float currentOrbitalVelocity = 0.05f;
+	public bool SatelliteActivated { get; private set; }
+
+	public void Spawn(List<Vector3> launchRoute)
     {
         this.launchRoute = launchRoute;
         pivot = new GameObject("Satelite Pivot");
