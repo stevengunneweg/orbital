@@ -874,6 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7460166ed4d11d45a4e7bf8f3ce7b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1531593529}
 --- !u!114 &206201039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1233,6 +1234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   money: {fileID: 1524512685}
   nrOfSatellites: {fileID: 536558957}
+  currentSatelliteName: {fileID: 177582517}
 --- !u!1001 &496166671
 Prefab:
   m_ObjectHideFlags: 0
@@ -2443,7 +2445,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 875471641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1531593529}
+        m_MethodName: ChangeToRailgunSatellite
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &875471641
@@ -3954,6 +3967,7 @@ MonoBehaviour:
   population: {fileID: 1531593531}
   launchPad: {fileID: 1647635519}
   playerInfoView: {fileID: 414976772}
+  currentSatelliteType: 0
 --- !u!4 &1531593530
 Transform:
   m_ObjectHideFlags: 0
@@ -4453,7 +4467,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Satellite Type:'
+  m_text: 'Satellite:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 715b80e429c437e40867928a4e1fc975, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 715b80e429c437e40867928a4e1fc975, type: 2}
@@ -4520,10 +4534,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1677192107}
-    characterCount: 15
+    characterCount: 10
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -5455,7 +5469,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1886512712}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1531593529}
+        m_MethodName: ChangeToDefaultSatellite
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1886512712

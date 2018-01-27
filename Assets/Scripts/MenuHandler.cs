@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MenuHandler : MonoBehaviour {
 
+    [Header("Reference")]
+    public GameManager gameManager;
+
     public delegate void BuySatelliteEvent(GameObject satelliteObject);
     public static event BuySatelliteEvent OnBuySattelite;
     
@@ -12,7 +15,7 @@ public class MenuHandler : MonoBehaviour {
     {
         if (OnBuySattelite != null)
         {
-            OnBuySattelite(SateliteFactory.FabricateDefaultSatelite());
+            OnBuySattelite(SateliteFactory.From(gameManager.currentSatelliteType));
         }
     }
 }

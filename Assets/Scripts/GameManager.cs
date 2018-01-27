@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
+
 
     Player currentPlayer;
     [SerializeField]
@@ -13,10 +13,22 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     PlayerInfoView playerInfoView;
 
+    public SateliteFactory.SatelliteType currentSatelliteType;
+
+    public void ChangeToDefaultSatellite()
+    {
+        currentSatelliteType = SateliteFactory.SatelliteType.Default;
+    }
+
+    public void ChangeToRailgunSatellite()
+    {
+        currentSatelliteType = SateliteFactory.SatelliteType.Railgun;
+    }
+
     private void Start()
     {
         currentPlayer = new Player(50);
-       launchPad.OnBoughtSatellite += BuySatellite;
+        launchPad.OnBoughtSatellite += BuySatellite;
     }
 
     private void OnDestroy()
@@ -26,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites());
+        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), currentSatelliteType.ToString());
         foreach(var m in population.GetAllMinions())
         { 
             currentPlayer.Score.AddScore(m.GetCurrentScore());
