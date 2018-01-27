@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SateliteFactory : MonoBehaviour {
-    
+public class SateliteFactory : MonoBehaviour
+{
+
+    public enum SatelliteType
+    {
+        Default,
+        Railgun,
+    }
+
     private static SateliteFactory _factory;
     public static SateliteFactory Factory
     {
@@ -19,6 +26,23 @@ public class SateliteFactory : MonoBehaviour {
     [Header("Base")]
     public GameObject sateliteBasePrefab;
 
+    public static GameObject From(SatelliteType type, int teamId = defaultTeamId)
+    {
+        var _base = Base(teamId);
+
+        switch (type)
+        {
+            case SatelliteType.Railgun:
+                MakeRailgun(_base);
+                break;
+            case SatelliteType.Default:
+            default:
+                break;
+        }
+
+        return _base;
+    }
+
 	private static GameObject Base(int teamId = defaultTeamId)
     {
         var instance = Instantiate(Factory.sateliteBasePrefab);
@@ -28,22 +52,13 @@ public class SateliteFactory : MonoBehaviour {
         return instance;
     }
 
-	public static GameObject FabricateDefaultSatelite(int teamId = defaultTeamId)
-    {
-		var instance = Base(teamId);
-        return instance;
-    }
-
-
     [Header("Indestructable Satelite Values")]
     public int indestructableHealth = 9999;
 
-	public static GameObject FabricateIndestructableSatelite(int teamId = defaultTeamId)
+	public static void MakeIndestructableSatelite(GameObject _base)
     {
-		var instance = Base(teamId);
-		instance.name = "Indestructable Satelite";
-        instance.GetComponent<Health>().IncreaseHealth(Factory.indestructableHealth);
-        return instance;
+        _base.name = "Indestructable Satelite";
+        _base.GetComponent<Health>().IncreaseHealth(Factory.indestructableHealth);
     }
 
     [Header("Railgun Satelite Values")]
@@ -51,16 +66,17 @@ public class SateliteFactory : MonoBehaviour {
     public float railgunRotationSpeed = 1f;
     public float railgunReloadDuration = 1f;
 
-	public static GameObject FabricateRailgunSatelite(int teamId = defaultTeamId)
+	public static void MakeRailgun(GameObject _base)
     {
-		var instance = Base(teamId);
-		instance.name = "Railgun Satelite";
+        _base.name = "Railgun Satelite";
 
-        var railgun = instance.AddComponent<RailgunModule>();
+        // Check if it already has a railgun
+        if (_base.GetComponent<RailgunModule>() != null)
+            return;
+
+        var railgun = _base.AddComponent<RailgunModule>();
         railgun.rotationSpeed = Factory.railgunRotationSpeed;
         railgun.reloadDuration = Factory.railgunReloadDuration;
         railgun.bulletPrefab = Factory.railgunBulletPrefab;
-
-        return instance;
     }
 }

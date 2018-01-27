@@ -61,7 +61,7 @@ Material:
     - _DstBlend: 0
     - _Fade: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0.797
+    - _Glossiness: 0.425
     - _GlossyReflections: 1
     - _MaxDepth: 2.689
     - _Metallic: 0
