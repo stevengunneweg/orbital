@@ -7,7 +7,8 @@ public class SateliteFactory : MonoBehaviour
 
     public enum SatelliteType
     {
-        Default,
+		Default,
+		Transmit,
         Railgun,
     }
 
@@ -36,7 +37,10 @@ public class SateliteFactory : MonoBehaviour
                 MakeRailgun(_base);
                 AddAttGraphics(_base);
                 break;
-            case SatelliteType.Default:
+			case SatelliteType.Default:
+			case SatelliteType.Transmit:
+				MakeTransmitSatelite(_base);
+				break;
             default:
                 AddTransmissionGraphics(_base);
                 break;
@@ -80,14 +84,43 @@ public class SateliteFactory : MonoBehaviour
         return instance;
     }
 
-    [Header("Indestructable Satelite Values")]
-    public int indestructableHealth = 9999;
+	[Header("Transmit Satelite Values")]
+	public Material coneMaterial;
+	public float broadcastRadius = 15;
+
+	public static void MakeTransmitSatelite(GameObject _base)
+    {
+        _base.name = "Transmit Satelite";
+
+		// Add Transmit script
+		SignalTransmitter transmitter = _base.AddComponent<SignalTransmitter>();
+		transmitter.broadcastRadius = Factory.broadcastRadius;
+		transmitter.signalType = SignalType.Internet;
+		_base.AddComponent<TransmitterConnector>();
+
+		// Add cone of shame
+		ConeFactory coneFactory = new ConeFactory();
+		coneFactory.numVertices = 20;
+		coneFactory.radiusTop = 0f;
+		coneFactory.radiusBottom = Mathf.Tan(Factory.broadcastRadius) / 2;
+		coneFactory.length = 1f;
+		GameObject cone = coneFactory.ManufactureCone();
+		// Set parent, position and rotation
+		cone.transform.parent = _base.transform;
+		cone.transform.localPosition = Vector3.zero;
+		cone.transform.localRotation = Quaternion.Euler(new Vector3(90, 0, 0));
+		// Set Material
+		cone.GetComponent<MeshRenderer>().sharedMaterial = Factory.coneMaterial;
+	}
+
+	[Header("Indestructable Satelite Values")]
+	public int indestructableHealth = 9999;
 
 	public static void MakeIndestructableSatelite(GameObject _base)
-    {
-        _base.name = "Indestructable Satelite";
-        _base.GetComponent<Health>().IncreaseHealth(Factory.indestructableHealth);
-    }
+	{
+		_base.name = "Indestructable Satelite";
+		_base.GetComponent<Health>().IncreaseHealth(Factory.indestructableHealth);
+	}
 
     [Header("Railgun Satelite Values")]
     public GameObject railgunBulletPrefab;

@@ -34,9 +34,9 @@ public class SignalTransmitter : MonoBehaviour
     public HashSet<Minion> ConnectedMinions { get; private set; }
 
     [SerializeField]
-    private double broadcastRadius = 20; //In degrees
+    public double broadcastRadius = 20; //In degrees
     [SerializeField]
-    private SignalType signalType;
+    public SignalType signalType;
     public SignalType SignalType { get { return signalType; } }
     public Transform Planet;
 
@@ -61,6 +61,8 @@ public class SignalTransmitter : MonoBehaviour
             if (planetGameObject != null)
                 this.Planet = planetGameObject.transform;
         }
+
+		line = GetComponent<LineRenderer>();
     }
 
     private void OnDestroy()
