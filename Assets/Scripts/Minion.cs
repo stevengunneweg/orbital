@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SignalReceiver : MonoBehaviour
+public class Minion : MonoBehaviour
 {
-    static List<SignalReceiver> instances = new List<SignalReceiver>();
-    public static List<SignalReceiver> Instances
+    static List<Minion> instances = new List<Minion>();
+    public static List<Minion> Instances
     {
         get
         {
             if (instances == null)
-                instances = new List<SignalReceiver>();
+                instances = new List<Minion>();
             return instances;
         }
     }
@@ -31,7 +31,6 @@ public class SignalReceiver : MonoBehaviour
         float connectionScore = 0;
         foreach (SignalType signalType in Enum.GetValues(typeof(SignalType)))
             connectionScore += calculateScore(signalType);
-        Score.Value += connectionScore;
     }
 
     // todo [KG] make the score calculation do fancy things
@@ -53,31 +52,31 @@ public class SignalReceiver : MonoBehaviour
         HashSet<SignalTransmitter> connectedTransmitters = new HashSet<SignalTransmitter>();
         foreach (SignalTransmitter signalTransmitter in SignalTransmitter.Instances[signalType])
         {
-            if (signalTransmitter.Receivers.Contains(this))
+            if (signalTransmitter.ConnectedMinions.Contains(this))
                 if (!connectedTransmitters.Contains(signalTransmitter))
                     connectedTransmitters.Add(signalTransmitter);
             var connector = signalTransmitter.gameObject.GetComponent<TransmitterConnector>();
             if (connector != null)
                 foreach (var connectedTransmitter in connector.Connections)
-                    if (connectedTransmitter.Transmitter.Receivers.Contains(this))
+                    if (connectedTransmitter.Transmitter.ConnectedMinions.Contains(this))
                         if (!connectedTransmitters.Contains(connectedTransmitter.Transmitter))
                             connectedTransmitters.Add(connectedTransmitter.Transmitter);
         }
         return connectedTransmitters;
     }
 
-    HashSet<SignalReceiver> getConnections(SignalType signalType)
+    HashSet<Minion> getConnections(SignalType signalType)
     {
         HashSet<SignalTransmitter> connectedTransmitters = getConnectedTransmitters(signalType);
-        HashSet<SignalReceiver> connections = new HashSet<SignalReceiver>();
+        HashSet<Minion> connectedMinions = new HashSet<Minion>();
         foreach (SignalTransmitter signalTransmitter in connectedTransmitters)
-            foreach (SignalReceiver receiver in signalTransmitter.Receivers)
-                if (!connections.Contains(receiver))
-                    connections.Add(receiver);
+            foreach (Minion minion in signalTransmitter.ConnectedMinions)
+                if (!connectedMinions.Contains(minion))
+                    connectedMinions.Add(minion);
 
-        if (connections.Contains(this))
-            connections.Remove(this);
+        if (connectedMinions.Contains(this))
+            connectedMinions.Remove(this);
 
-        return connections;
+        return connectedMinions;
     }
 }

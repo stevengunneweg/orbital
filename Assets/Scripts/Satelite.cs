@@ -7,8 +7,9 @@ public class Satelite : MonoBehaviour {
     [SerializeField]
     SateliteValues values;
     int turningDirection = 1; // 0 == Counter Clockwise -> 1 == Clockwise
-    List<Vector3> launchRoute;
+    List<Vector3> launchRoute = new List<Vector3>();
     GameObject pivot;
+	float currentOrbitalVelocity = 0.1f;
 
     public void Spawn(List<Vector3> launchRoute)
     {
@@ -27,16 +28,27 @@ public class Satelite : MonoBehaviour {
 
     protected void Start()
     {
-        values = new SateliteValues(10, 0.5f, 0.005f);
+		values = new SateliteValues(10, 0.5f, 0.005f);
     }
     private void Update()
     {
-        if(launchRoute.Count != 0)
-        {
-            TravelToInitialDestination();
-            return;
-        }
-        pivot.transform.Rotate(new Vector3(0, 0, this.values.GetOrbitalVelocity()*-1*turningDirection));
+		if (launchRoute.Count != 0) {
+			TravelToInitialDestination();
+			return;
+		}
+		if (pivot == null) {
+			return;
+		}
+
+		// Accelerate to orbitalVelocity
+		if (currentOrbitalVelocity < values.GetOrbitalVelocity()) {
+			currentOrbitalVelocity += (Time.deltaTime / 4);
+			if (currentOrbitalVelocity > values.GetOrbitalVelocity()) {
+				currentOrbitalVelocity = values.GetOrbitalVelocity();
+			}
+		}
+
+		pivot.transform.Rotate(new Vector3(0, 0, currentOrbitalVelocity * -1 * turningDirection));
     }
 
     void DetermineDirection()

@@ -20,19 +20,19 @@ public class SignalTransmitter : MonoBehaviour
         }
     }
     
-    public HashSet<SignalReceiver> Receivers { get; private set; }
+    public HashSet<Minion> ConnectedMinions { get; private set; }
 
     [SerializeField]
-    double broadcastRadius = 20; //In degree
+    private double broadcastRadius = 20; //In degrees
     [SerializeField]
-    SignalType signalType;
+    private SignalType signalType;
     public SignalType SignalType { get { return signalType; } }
-
     public Transform Planet;
 
+
 	// Use this for initialization
-	void Start () {
-        Receivers = new HashSet<SignalReceiver>();
+	private void Start () {
+        ConnectedMinions = new HashSet<Minion>();
 
         Instances[signalType].Add(this);
         if (Planet == null)
@@ -43,18 +43,18 @@ public class SignalTransmitter : MonoBehaviour
         }
 	}
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         Instances[signalType].Remove(this);
     }
 	
 	// Update is called once per frame
-	void LateUpdate ()
+	private void LateUpdate ()
     {
-        Receivers = findConnectedReceivers();        
+        ConnectedMinions = findConnectedReceivers();        
     }
 
-    public bool ReceivesSignal(SignalReceiver receiver)
+    public bool SignalReaches(Minion receiver)
     {
         Vector2 planetDirection = (Vector2)Planet.position - (Vector2)transform.position;
         if (Vector2.Dot(planetDirection, (Vector2)Planet.position - (Vector2)receiver.transform.position) < 0)
@@ -71,11 +71,11 @@ public class SignalTransmitter : MonoBehaviour
         return true;
     }
     
-    HashSet<SignalReceiver> findConnectedReceivers()
+    private HashSet<Minion> findConnectedReceivers()
     {
-        HashSet<SignalReceiver> connectedReceivers = new HashSet<SignalReceiver>();
-        foreach (var receiver in SignalReceiver.Instances)
-            if (ReceivesSignal(receiver))
+        HashSet<Minion> connectedReceivers = new HashSet<Minion>();
+        foreach (var receiver in Minion.Instances)
+            if (SignalReaches(receiver))
                 connectedReceivers.Add(receiver);
         return connectedReceivers;
     }

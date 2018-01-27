@@ -37,5 +37,21 @@ public class SateliteFactory : MonoBehaviour {
         return instance;
     }
 
-	
+    [Header("Railgun Satelite Values")]
+    public GameObject railgunBulletPrefab;
+    public float railgunRotationSpeed = 1f;
+    public float railgunReloadDuration = 1f;
+
+    public static GameObject FabricateRailgunSatelite()
+    {
+        var instance = FabricateDefaultSatelite();
+        instance.name = "Railgun Satelite";
+
+        var railgun = instance.AddComponent<RailgunModule>();
+        railgun.rotationSpeed = Factory.railgunRotationSpeed;
+        railgun.reloadDuration = Factory.railgunReloadDuration;
+        railgun.bulletPrefab = Factory.railgunBulletPrefab;
+
+        return instance;
+    }
 }

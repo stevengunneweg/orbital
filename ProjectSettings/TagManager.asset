@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SateliteFactory
+  - BulletParent
   layers:
   - Default
   - TransparentFX
