@@ -32,11 +32,14 @@ public class SatelliteChoserUI : MonoBehaviour {
             }
         }
 
-        var totalSeconds = gameManager.TimeTheGameIsRunningInSeconds;
-        int numberOfSmallTimeUnitsInOneLargeTimeUnit = 53;
-        var smallTimeUnit = Mathf.Floor(totalSeconds % numberOfSmallTimeUnitsInOneLargeTimeUnit);
-        var largeTimeUnit = Mathf.Floor(totalSeconds / numberOfSmallTimeUnitsInOneLargeTimeUnit);
-        timeText.text = largeTimeUnit + " year" + (largeTimeUnit == 1 ? "" : "s") + ", " + smallTimeUnit + " week" + (smallTimeUnit == 1 ? "" : "s");
+        if (!gameManager.endScreen.activeSelf)
+        {
+            var totalSeconds = gameManager.TimeTheGameIsRunningInSeconds;
+            int numberOfSmallTimeUnitsInOneLargeTimeUnit = 53;
+            var smallTimeUnit = Mathf.Floor(totalSeconds % numberOfSmallTimeUnitsInOneLargeTimeUnit);
+            var largeTimeUnit = Mathf.Floor(totalSeconds / numberOfSmallTimeUnitsInOneLargeTimeUnit);
+            timeText.text = largeTimeUnit + " year" + (largeTimeUnit == 1 ? "" : "s") + ", " + smallTimeUnit + " week" + (smallTimeUnit == 1 ? "" : "s");
+        }
     }
 
     public bool CanPayAnySatellite()
