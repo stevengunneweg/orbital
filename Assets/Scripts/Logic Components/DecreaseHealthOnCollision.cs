@@ -7,7 +7,7 @@ public class DecreaseHealthOnCollision : MonoBehaviour {
     [SerializeField]
     Health health;
 
-    int decreaseHealth = 50;
+    int decreaseHealth = 10;
 
     public void SetHealthDecrease(int nr)
     {

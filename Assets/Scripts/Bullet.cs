@@ -60,4 +60,9 @@ public class Bullet : MonoBehaviour {
 		}
     }
 
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        Destroy(this.gameObject);
+    }
 }
