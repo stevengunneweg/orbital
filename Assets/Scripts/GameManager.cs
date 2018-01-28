@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.R))
+            RestartGame();
         playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), lastSatelliteChoice);
         foreach(var m in population.GetAllMinions())
         { 
@@ -90,6 +93,10 @@ public class GameManager : MonoBehaviour {
         GameRunning = false;
         endScreen.SetActive(true);
         endScreen.GetComponent<EndScreen>().SetTime(TimeTheGameIsRunningInSeconds);
+    }
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public static bool EnableDecrease
     {
