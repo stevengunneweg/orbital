@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 
     public void ChangeToDefensiveSatellite()
     {
-        currentSatelliteType = SateliteFactory.SatelliteType.Defense;
+        currentSatelliteType = SateliteFactory.SatelliteType.Armored;
     }
 
     public void ChangeToSelfRepairingSatellite()
