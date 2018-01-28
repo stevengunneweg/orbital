@@ -26,7 +26,7 @@ public class LaunchPad : MonoBehaviour {
     {
         get
         {
-            return launchpadObject.transform.position + launchpadObject.transform.position.normalized * 0.2f;
+            return launchpadObject.transform.position + launchpadObject.transform.position.normalized * 0.3f;
         }
     }
 
@@ -165,7 +165,7 @@ public class LaunchPad : MonoBehaviour {
 			Vector3 prevPosition = trajectoryPositions[trajectoryPositions.Count - 1];
 			Vector3 newPosition = GetMouseWorldPosition();
 
-            var minDist = distanceToEarthsCrust + 0.2f;
+            var minDist = distanceToEarthsCrust + 0.3f;
             if (newPosition.magnitude < minDist)
                 newPosition = newPosition.normalized * minDist;
 

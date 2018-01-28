@@ -36,25 +36,25 @@ public class SateliteFactory : MonoBehaviour
         {
             case SatelliteType.Attack:
                 MakeAttackSatellite(satelite);
-                AddChild(satelite, Factory.graphics_satellite_att);
+                SetColor(teamId, AddChild(satelite, Factory.graphics_satellite_att));
                 satelite.GetValues().SetCost(175);
                 break;
             case SatelliteType.SelfRepairing:
                 MakeTransmitSatelite(satelite);
                 MakeSelfRepairingTransmitSatelite(satelite);
-                AddChild(satelite, Factory.graphics_satellite_repair);
+                SetColor(teamId, AddChild(satelite, Factory.graphics_satellite_repair));
                 satelite.GetValues().SetCost(300);
                 break;
             case SatelliteType.Armored:
                 MakeTransmitSatelite(satelite);
                 MakeArmoredSatelite(satelite);
-                AddChild(satelite, Factory.graphics_satellite_def);
+                SetColor(teamId, AddChild(satelite, Factory.graphics_satellite_def));
                 satelite.GetValues().SetCost(250);
                 break;
-			case SatelliteType.Transmit:
+            case SatelliteType.Transmit:
             default:
                 MakeTransmitSatelite(satelite);
-                AddChild(satelite, Factory.graphics_satellite_trans);
+                SetColor(teamId, AddChild(satelite, Factory.graphics_satellite_trans));
                 satelite.GetValues().SetCost(125);
                 break;
         }
@@ -62,13 +62,20 @@ public class SateliteFactory : MonoBehaviour
         return satelite;
     }
 
-    private static void AddChild(Satelite satelite, GameObject child)
+    private static GameObject AddChild(Satelite satelite, GameObject child)
     {
         var parent = satelite.transform;
-        var instance = Instantiate(child, parent, false);
+		return Instantiate(child, parent, false);
+    }
+    private static GameObject SetColor(int teamid, GameObject _graphics)
+    {
+        Color color = ((Color.white * 0.2f) + ((teamid == 1) ? Color.white : Color.red) * 0.8f);
+        _graphics.transform.GetChild(0).GetComponent<Renderer>().material.color = color;
+
+        return _graphics;
     }
 
-	private static Satelite InstantiateSaleliteBase(int teamId)
+    private static Satelite InstantiateSaleliteBase(int teamId)
     {
         var instance = Instantiate(Factory.sateliteBasePrefab);
         instance.name = Factory.sateliteBasePrefab.name;

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
  
 // an Editor method to create a cone primitive (so far no end caps)
@@ -27,8 +26,8 @@ public class ConeFactory {
 			radiusBottom = length * Mathf.Tan(openingAngle * Mathf.Deg2Rad / 2);
 		}
 		string meshName = newCone.name + numVertices + "v" + radiusTop + "t" + radiusBottom + "b" + length + "l" + length + (outside ? "o" : "") + (inside ? "i" : "");
-		string meshPrefabPath = "Assets/Cones/" + meshName + ".asset";
-		Mesh mesh = (Mesh)AssetDatabase.LoadAssetAtPath(meshPrefabPath, typeof(Mesh));
+		//string meshPrefabPath = "Assets/Cones/" + meshName + ".asset";
+        Mesh mesh = null;
 		if (mesh == null) {
 			mesh = new Mesh();
 			mesh.name = meshName;
@@ -163,8 +162,8 @@ public class ConeFactory {
 					}
 			}
 			mesh.triangles = tris;		
-			AssetDatabase.CreateAsset(mesh, meshPrefabPath);
-			AssetDatabase.SaveAssets();
+			//AssetDatabase.CreateAsset(mesh, meshPrefabPath);
+			//AssetDatabase.SaveAssets();
 		}
  
 		MeshFilter mf=newCone.AddComponent<MeshFilter>();
@@ -177,7 +176,7 @@ public class ConeFactory {
 			mc.sharedMesh=mf.sharedMesh;
 		}
  
-        Selection.activeObject = newCone;
+        //Selection.activeObject = newCone;
 
 		return newCone;
 	}
