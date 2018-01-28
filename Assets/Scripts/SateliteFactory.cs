@@ -68,10 +68,11 @@ public class SateliteFactory : MonoBehaviour
         return _base;
     }
 
-    private static void AddChild(GameObject _base, GameObject child)
+    private static GameObject AddChild(GameObject _base, GameObject child)
     {
         var parent = _base.transform;
         var instance = Instantiate(child, parent, false);
+        return instance;
     }
 
 	private static GameObject Base(int teamId, float cost)
@@ -83,6 +84,13 @@ public class SateliteFactory : MonoBehaviour
         satellite.SetValues(new SateliteValues(cost, 0.5f, 0.05f));
         satellite.SetTeamId(teamId);
         return instance;
+    }
+    private static GameObject SetColor(GameObject _base, GameObject _graphics)
+    {
+        Color color = ((Color.white * 0.2f) + ((_base.GetComponent<Satelite>().GetValues().TeamId == 1) ? Color.white : Color.red) * 0.8f);
+        _graphics.transform.GetChild(0).GetComponent<Renderer>().material.color = color;
+
+        return _graphics;
     }
 
 	[Header("Transmit Satelite Values")]
@@ -115,7 +123,7 @@ public class SateliteFactory : MonoBehaviour
 		cone.GetComponent<MeshRenderer>().sharedMaterial = Factory.coneMaterial;
 		// Hide cone initially
 		cone.GetComponent<Renderer>().enabled = false;
-        AddChild(_base, Factory.graphics_satellite_trans);
+        SetColor(_base, AddChild(_base, Factory.graphics_satellite_trans));
     }
 
     [Header("Attack Satelite Values")]
@@ -133,7 +141,7 @@ public class SateliteFactory : MonoBehaviour
         railgun.reloadDuration = Factory.railgunReloadDuration;
         railgun.bulletPrefab = Factory.railgunBulletPrefab;
 
-        AddChild(_base, Factory.graphics_satellite_att);
+        SetColor(_base, AddChild(_base, Factory.graphics_satellite_att));
     }
 
     [Header("Defensive Satelite Values")]
@@ -150,7 +158,7 @@ public class SateliteFactory : MonoBehaviour
             _base.AddComponent<Shielding>();
         }
 
-        AddChild(_base, Factory.graphics_satellite_def);
+        SetColor(_base, AddChild(_base, Factory.graphics_satellite_def));
     }
 
     [Header("Repair Satelite Values")]
@@ -161,6 +169,6 @@ public class SateliteFactory : MonoBehaviour
         _base.name = "Self Repairing Transmit";
         MakeTransmitSatelite(_base);
         _base.AddComponent<Repairing>();
-        AddChild(_base, Factory.graphics_satellite_trans);
+        SetColor(_base, AddChild(_base, Factory.graphics_satellite_att));
     }
 }
