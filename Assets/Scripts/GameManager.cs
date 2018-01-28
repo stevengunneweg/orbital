@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
 
     public SatelliteChoserPanel lastSatelliteChoice;
 
+    private Timer? gameTimer = null;
+
     public float noSatalliteDecreaseCost = 0.01f;
     private static bool _gameRunning;
 
@@ -53,6 +55,11 @@ public class GameManager : MonoBehaviour {
             if (EnableDecrease)
                 currentPlayer.Score.DecreaseScore(noSatalliteDecreaseCost);
         }
+
+        if (_gameRunning && gameTimer == null)
+        {
+            gameTimer = new Timer(0);
+        }
     }
 
     public void BuySatellite(GameObject satelliteObject)
@@ -78,5 +85,13 @@ public class GameManager : MonoBehaviour {
     public static bool GameRunning
     {
         get { return _gameRunning; } set { _gameRunning = value; EnableDecrease = value; }
+    }
+
+    public float TimeTheGameIsRunningInSeconds
+    {
+        get
+        {
+            return gameTimer.HasValue ? gameTimer.Value.time : 0;
+        }
     }
 }
