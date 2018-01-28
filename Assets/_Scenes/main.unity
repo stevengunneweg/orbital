@@ -3245,7 +3245,7 @@ GameObject:
   - component: {fileID: 1453685044}
   - component: {fileID: 1453685045}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: EarthCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
