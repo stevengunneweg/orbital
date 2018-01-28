@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), lastSatelliteChoice.shortName, lastSatelliteChoice.GetCostFromText());
+        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), lastSatelliteChoice);
         foreach(var m in population.GetAllMinions())
         { 
             currentPlayer.Score.AddScore(m.GetCurrentScore());
@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour {
 
     public void BuySatellite(GameObject satelliteObject)
     {
+		lastSatelliteChoice = null;
+
         Satelite sat = satelliteObject.GetComponent<Satelite>();
         if (currentPlayer.Score.CurrentScore >= sat.GetValues().GetCost())
         {
