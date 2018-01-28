@@ -12,11 +12,14 @@ public class PlayerInfoView : MonoBehaviour {
     [SerializeField]
     TextMeshProUGUI currentSatelliteName;
 
-    public void DrawInfo(int money, int nrOfSatellites, string satelliteName, float satellitePrice)
+	public void DrawInfo(int money, int nrOfSatellites, SatelliteChoserPanel lastSatellitePanel)
     {
         this.money.text = "$" + string.Format("{00:00}", money);
         this.nrOfSatellites.text = "x" + nrOfSatellites.ToString();
-        this.currentSatelliteName.text = satelliteName + " ($" + satellitePrice.ToString("0") + ")";
+		if (lastSatellitePanel == null) {
+			this.currentSatelliteName.text = "";
+		} else {
+			this.currentSatelliteName.text = lastSatellitePanel.shortName + " ($" + lastSatellitePanel.GetCostFromText() + ")";
+		}
     }
-
 }
