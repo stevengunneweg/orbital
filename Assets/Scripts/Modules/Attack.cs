@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Satelite))]
 public class Attack : MonoBehaviour {
-
+    public Satelite satelite;
     public float angle;
     public float rotationSpeed = 1f;
     public float reloadDuration = 1f;
@@ -15,6 +16,7 @@ public class Attack : MonoBehaviour {
 
     protected void Start()
     {
+        satelite = GetComponent<Satelite>();
         angle = Random.value * 360f;
         bulletParent = Hierarchy.GetComponentWithTag<BulletParent>();
         isReloading = new Timer(reloadDuration);        
@@ -44,7 +46,8 @@ public class Attack : MonoBehaviour {
                     closestCollider = collider;
                 }
             }
-
+            
+            // Create the bullet
             if (closestCollider != null)
             {
                 var direction = (closestCollider.transform.position - transform.position).normalized;
@@ -60,6 +63,7 @@ public class Attack : MonoBehaviour {
         // Create the bullet
         var bulletInstance = Instantiate(bulletPrefab, position, Quaternion.identity, bulletParent.transform);
         var bullet = bulletInstance.GetComponent<Bullet>();
+        bullet.isPlayer = satelite.IsPlayer;
 
         // Apply the bullet direction to the bullet
         bullet.SetDirection(direction);
