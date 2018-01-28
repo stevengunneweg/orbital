@@ -19,6 +19,18 @@ public class Satelite : MonoBehaviour
     GameObject rocket;
     public int TeamId { get { return values.TeamId; } }
     public bool IsPlayer { get { return values.TeamId == 1; } }
+    
+
+    private void updateLayer(bool isPlayer)
+    {
+        SetLayer(gameObject, isPlayer ? LayerMask.NameToLayer("Player") : LayerMask.NameToLayer("Enemy"));
+    }
+    private void SetLayer(GameObject root, int layer)
+    {
+        root.layer = layer;
+        for (int i = 0; i < root.transform.childCount; ++i)
+            SetLayer(transform.GetChild(i).gameObject, layer);
+    }
 
     private GameObject cone;
 
@@ -66,6 +78,7 @@ public class Satelite : MonoBehaviour
 		if (coneComponent != null) {
 			cone = coneComponent.gameObject;
 		}
+        updateLayer(IsPlayer);
 	}
     private void Update()
     {
