@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 60623812}
   - component: {fileID: 60623811}
   - component: {fileID: 60623810}
+  - component: {fileID: 60623813}
   m_Layer: 5
   m_Name: Attack
   m_TagString: Untagged
@@ -193,11 +194,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1531593529}
-        m_MethodName: ChangeToRailgunSatellite
-        m_Mode: 1
+        m_MethodName: SetLastSatelliteChoice
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 60623813}
+          m_ObjectArgumentAssemblyTypeName: SatelliteChoserPanel, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -249,6 +250,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 60623808}
+--- !u!114 &60623813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 60623808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee1a71673fe97a4d8ba29506c171630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  satelliteType: 1
+  shortName: Attack
+  costText: {fileID: 1891384648}
 --- !u!1 &81806248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,6 +1060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a468205ef86b0e94d97fa923fdab301e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1531593529}
 --- !u!1 &352243624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2921,6 +2937,7 @@ GameObject:
   - component: {fileID: 1359921251}
   - component: {fileID: 1359921250}
   - component: {fileID: 1359921252}
+  - component: {fileID: 1359921253}
   m_Layer: 5
   m_Name: Trasmit
   m_TagString: Untagged
@@ -3023,11 +3040,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1531593529}
-        m_MethodName: ChangeToTransmissionSatellite
-        m_Mode: 1
+        m_MethodName: SetLastSatelliteChoice
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1359921253}
+          m_ObjectArgumentAssemblyTypeName: SatelliteChoserPanel, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3046,6 +3063,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1359921253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1359921248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee1a71673fe97a4d8ba29506c171630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  satelliteType: 0
+  shortName: Transmit
+  costText: {fileID: 1188194157}
 --- !u!1 &1371660287
 GameObject:
   m_ObjectHideFlags: 0
@@ -3493,8 +3524,7 @@ MonoBehaviour:
   population: {fileID: 1531593531}
   launchPad: {fileID: 1647635519}
   playerInfoView: {fileID: 414976772}
-  currentSatelliteType: 0
-  currentSatelliteCost: 125
+  lastSatelliteChoice: {fileID: 1359921253}
 --- !u!4 &1531593530
 Transform:
   m_ObjectHideFlags: 0
@@ -4190,6 +4220,7 @@ GameObject:
   - component: {fileID: 1708102485}
   - component: {fileID: 1708102484}
   - component: {fileID: 1708102483}
+  - component: {fileID: 1708102486}
   m_Layer: 5
   m_Name: Armored
   m_TagString: Untagged
@@ -4259,11 +4290,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1531593529}
-        m_MethodName: ChangeToDefensiveSatellite
-        m_Mode: 1
+        m_MethodName: SetLastSatelliteChoice
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1708102486}
+          m_ObjectArgumentAssemblyTypeName: SatelliteChoserPanel, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4315,6 +4346,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1708102481}
+--- !u!114 &1708102486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1708102481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee1a71673fe97a4d8ba29506c171630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  satelliteType: 2
+  shortName: Armored
+  costText: {fileID: 529753716}
 --- !u!1 &1719750419
 GameObject:
   m_ObjectHideFlags: 0
