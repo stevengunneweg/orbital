@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour {
         { 
             currentPlayer.Score.AddScore(m.GetCurrentScore());
         }
-        Debug.Log(population.ActivePlayerTransmitSatellites().Count);
         if (population.ActivePlayerTransmitSatellites().Count <= 0)
         {
             if (EnableDecrease)
