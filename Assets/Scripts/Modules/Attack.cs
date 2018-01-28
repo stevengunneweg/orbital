@@ -8,7 +8,6 @@ public class Attack : MonoBehaviour {
     public float rotationSpeed = 1f;
     public float reloadDuration = 1f;
     public GameObject bulletPrefab;
-    GameObject axl;
 
     private Timer isReloading;
 
@@ -20,72 +19,53 @@ public class Attack : MonoBehaviour {
         bulletParent = Hierarchy.GetComponentWithTag<BulletParent>();
         isReloading = new Timer(reloadDuration);        
     }
-
-    int framesSinceLastShot = 0;
+    
     protected void Update()
     {
-        framesSinceLastShot++;
-        if (framesSinceLastShot > 30)
+        if (!isReloading)
         {
-            RaycastHit2D hit;
-            if (hit = Physics2D.Raycast(transform.position + (new Vector3(1, 0, 0) * 0.25f), new Vector3(1, 0, 0)))
-            {
-                if (hit.transform != this.transform)
-                    Shoot(transform.position + (new Vector3(1, 0, 0) * 0.25f), new Vector3(1, 0, 0));
-            }
-            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(-1, 0, 0) * 0.25f), new Vector3(-1, 0, 0)))
-            {
-                if (hit.transform != this.transform)
-                    Shoot(transform.position + (new Vector3(-1, 0, 0) * 0.25f), new Vector3(-1, 0, 0));
-            }
-            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(0, 1, 0) * 0.25f), new Vector3(0, 1, 0)))
-            {
-                if (hit.transform != this.transform)
-                    Shoot(transform.position + (new Vector3(0, 1, 0) * 0.25f), new Vector3(0, 1, 0));
+            const float startOffset = 0.3f;
+            const float lookDistance = 8f;
+            var allColliders = Physics2D.OverlapCircleAll(transform.position, lookDistance);
 
-            }
-            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(0, -1, 0) * 0.25f), new Vector3(0, -1, 0)))
+            Collider2D closestCollider = null;
+            float closestDistance = float.MaxValue;
+            foreach (var collider in allColliders)
             {
-                if (hit.transform != this.transform)
-                    Shoot(transform.position + (new Vector3(0, -1, 0) * 0.25f), new Vector3(0, -1, 0));
+                // TODO check for friendly or enemy colliders
+
+                if (collider.transform == transform)
+                    continue;
+
+                var dist = (collider.transform.position - transform.position).magnitude;
+                if (dist < closestDistance)
+                {
+                    closestDistance = dist;
+                    closestCollider = collider;
+                }
             }
 
-            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(1, 1, 0) * 0.25f), new Vector3(1, 1, 0)))
+            if (closestCollider != null)
             {
-                if (hit.transform != this.transform)
-                    Shoot(transform.position + (new Vector3(1, 1, 0) * 0.25f), new Vector3(1, 1, 0));
+                var direction = (closestCollider.transform.position - transform.position).normalized;
+                Shoot(transform.position + direction * startOffset, direction);
             }
-            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(-1, 1, 0) * 0.25f), new Vector3(-1, 1, 0)))
-            {
-                if (hit.transform != this.transform)
-                    Shoot(transform.position + (new Vector3(-1, 1, 0) * 0.25f), new Vector3(-1, 1, 0));
-            }
-            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(1, -1, 0) * 0.25f), new Vector3(1, -1, 0)))
-            {
-                if (hit.transform != this.transform)
-                    Shoot(transform.position + (new Vector3(1, -1, 0) * 0.25f), new Vector3(1, -1, 0));
 
-            }
-            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(-1, -1, 0) * 0.25f), new Vector3(-1, -1, 0)))
-            {
-                if (hit.transform != this.transform)
-                    Shoot(transform.position + (new Vector3(-1, -1, 0) * 0.25f), new Vector3(-1, -1, 0));
-            }
         }
         
     }
-
-
+    
     private void Shoot(Vector3 position, Vector3 direction)
     {
-        //Shoot
         // Create the bullet
         var bulletInstance = Instantiate(bulletPrefab, position, Quaternion.identity, bulletParent.transform);
         var bullet = bulletInstance.GetComponent<Bullet>();
 
         // Apply the bullet direction to the bullet
         bullet.SetDirection(direction);
-        framesSinceLastShot = 0;
+
+        // Restart the reload
+        isReloading = new Timer(reloadDuration);
     }
 
 }

@@ -62,10 +62,10 @@ public class SateliteFactory : MonoBehaviour
         return satelite;
     }
 
-    private static void AddChild(Satelite satelite, GameObject child)
+    private static GameObject AddChild(Satelite satelite, GameObject child)
     {
         var parent = satelite.transform;
-        var instance = Instantiate(child, parent, false);
+        return Instantiate(child, parent, false);
     }
 
 	private static Satelite InstantiateSaleliteBase(int teamId)

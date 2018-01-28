@@ -31,7 +31,7 @@ public class AdjustCamera : MonoBehaviour {
         }
 
         var currentSize = cam.orthographicSize;
-        cam.orthographicSize = Vector2.MoveTowards(new Vector2(currentSize, 0), new Vector2(targetSize, 0), Time.deltaTime * changeSpeed).x;
+        cam.orthographicSize = Mathf.MoveTowards(currentSize, targetSize, Time.deltaTime * changeSpeed);
     }
 
 }

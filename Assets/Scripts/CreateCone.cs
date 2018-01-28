@@ -26,7 +26,7 @@ public class ConeFactory {
 			radiusBottom = length * Mathf.Tan(openingAngle * Mathf.Deg2Rad / 2);
 		}
 		string meshName = newCone.name + numVertices + "v" + radiusTop + "t" + radiusBottom + "b" + length + "l" + length + (outside ? "o" : "") + (inside ? "i" : "");
-		string meshPrefabPath = "Assets/Cones/" + meshName + ".asset";
+		//string meshPrefabPath = "Assets/Cones/" + meshName + ".asset";
         Mesh mesh = null;
 		if (mesh == null) {
 			mesh = new Mesh();

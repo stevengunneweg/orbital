@@ -30,7 +30,7 @@ public class AIManager : MonoBehaviour {
         const int enemyTeamId = 2;
         var satellite = SateliteFactory.From(SateliteFactory.SatelliteType.Attack, enemyTeamId);
         GameObject go = satellite.gameObject;
-        Vector3 startPosition = Quaternion.Euler(0,0,(Random.value*360))* (Vector3.up * 2.7f);
+        Vector3 startPosition = Quaternion.Euler(0,0,(Random.value*360))* (Vector3.up * 2.85f);
         Vector3 endPosition = startPosition+ (startPosition.normalized*(0.3f+Random.value*4));
         List<Vector3> trajectoryList = new List<Vector3>();
         trajectoryList.Add(startPosition);
