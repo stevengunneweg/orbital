@@ -16,10 +16,14 @@ public class AIManager : MonoBehaviour {
     {
         while (true)
         {
-            yield return new WaitForSeconds(secondsTillNextEnemy);
-            secondsTillNextEnemy -= 2;
-            if (secondsTillNextEnemy < 3) secondsTillNextEnemy = 3;
-            SpawnSatallite();
+            if (GameManager.GameRunning)
+            {
+                yield return new WaitForSeconds(secondsTillNextEnemy);
+                secondsTillNextEnemy -= 2;
+                if (secondsTillNextEnemy < 3) secondsTillNextEnemy = 3;
+                SpawnSatallite();
+            }
+            yield return new WaitForSeconds(0.1f);
         }
         
 

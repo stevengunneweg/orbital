@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     public SatelliteChoserPanel lastSatelliteChoice;
 
     public float noSatalliteDecreaseCost = 0.01f;
+    private static bool _gameRunning;
 
     public void SetLastSatelliteChoice(SatelliteChoserPanel lastSatelliteChoice)
     {
@@ -60,16 +61,20 @@ public class GameManager : MonoBehaviour {
         if (currentPlayer.Score.CurrentScore >= sat.GetValues().GetCost())
         {
             currentPlayer.Score.DecreaseScore(sat.GetValues().GetCost());
-            if (!EnableDecrease)
-                EnableDecrease = true;
+            if (!GameRunning)
+                GameRunning = true;
         }
         else
         {
             Destroy(satelliteObject);
         }
     }
-    public bool EnableDecrease
+    public static bool EnableDecrease
     {
         get; set;
+    }
+    public static bool GameRunning
+    {
+        get { return _gameRunning; } set { _gameRunning = value; EnableDecrease = value; }
     }
 }
