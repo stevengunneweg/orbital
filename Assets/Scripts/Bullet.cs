@@ -22,11 +22,15 @@ public class Bullet : MonoBehaviour {
     }
 
     private Rigidbody2D rb;
+	public Transform gfx;
+
+	private Timer lifetime;
 
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        updateLayer(IsPlayer);
+		updateLayer(IsPlayer);
+		lifetime = new Timer(5);
     }
 
     private void updateLayer(bool isPlayer)
@@ -38,17 +42,22 @@ public class Bullet : MonoBehaviour {
     {
         root.layer = layer;
         for (int i = 0; i < root.transform.childCount; ++i)
-            SetLayer(transform.GetChild(i).gameObject, layer);
+			SetLayer(transform.GetChild(i).gameObject, layer);
     }
 
     public void SetDirection(Vector3 direction)
     {
         this.direction = direction;
+		var angle = Vector3.SignedAngle(direction, Vector3.up, Vector3.forward);
+		gfx.Rotate(0, 0, -angle);
     }
 
     protected void Update()
     {
-        rb.MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
+		rb.MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
+		if (!lifetime) {
+			Destroy(gameObject);
+		}
     }
 
 }
