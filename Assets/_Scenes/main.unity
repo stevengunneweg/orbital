@@ -3245,7 +3245,7 @@ GameObject:
   - component: {fileID: 1453685044}
   - component: {fileID: 1453685045}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: EarthCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3524,7 +3524,6 @@ MonoBehaviour:
   launchPad: {fileID: 1647635519}
   playerInfoView: {fileID: 414976772}
   lastSatelliteChoice: {fileID: 1359921253}
-  noSatalliteDecreaseCost: 0.01
 --- !u!4 &1531593530
 Transform:
   m_ObjectHideFlags: 0
