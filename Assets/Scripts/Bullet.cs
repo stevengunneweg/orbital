@@ -63,6 +63,6 @@ public class Bullet : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Destroy(this.gameObject);
+        lifetime = new Timer(0.1f);
     }
 }

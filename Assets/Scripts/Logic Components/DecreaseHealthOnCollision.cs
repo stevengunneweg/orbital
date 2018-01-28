@@ -18,4 +18,9 @@ public class DecreaseHealthOnCollision : MonoBehaviour {
     {
         health.DecreaseHealth(decreaseHealth);
     }
+
+    private void OnCollisionEnter2D(Collider2D collision)
+    {
+        health.DecreaseHealth(decreaseHealth);
+    }
 }
