@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 
     private Timer? gameTimer = null;
 
+    public int startMoney = 300;
     public float noSatalliteDecreaseCost = 0.01f;
     private static bool _gameRunning;
 
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         EnableDecrease = false;
-        currentPlayer = new Player(220);
+        currentPlayer = new Player(startMoney);
         launchPad.OnBoughtSatellite += BuySatellite;
     }
 
