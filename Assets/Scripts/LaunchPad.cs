@@ -37,7 +37,7 @@ public class LaunchPad : MonoBehaviour {
 
     private void OnDestroy()
     {
-		MenuHandler.OnBuySattelite -= BuySatellite;
+        MenuHandler.OnBuySattelite -= BuySatellite;
     }
 
     public void BuySatellite(GameObject satObject)

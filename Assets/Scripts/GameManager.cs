@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour {
 
     public SatelliteChoserPanel lastSatelliteChoice;
 
+    public float noSatalliteDecreaseCost = 0.01f;
+    private static bool _gameRunning;
+
     public void SetLastSatelliteChoice(SatelliteChoserPanel lastSatelliteChoice)
     {
         this.lastSatelliteChoice = lastSatelliteChoice;
@@ -28,7 +31,8 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        currentPlayer = new Player(50);
+        EnableDecrease = false;
+        currentPlayer = new Player(5000);
         launchPad.OnBoughtSatellite += BuySatellite;
     }
 
@@ -39,25 +43,38 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-		playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), lastSatelliteChoice);
+        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), lastSatelliteChoice.shortName, lastSatelliteChoice.GetCostFromText());
         foreach(var m in population.GetAllMinions())
         { 
             currentPlayer.Score.AddScore(m.GetCurrentScore());
         }
+        if (population.NrOfSatellites() <= 0)
+        {
+            if (EnableDecrease)
+                currentPlayer.Score.DecreaseScore(noSatalliteDecreaseCost);
+        }
     }
 
     public void BuySatellite(GameObject satelliteObject)
-	{
-		lastSatelliteChoice = null;
-
+    {
         Satelite sat = satelliteObject.GetComponent<Satelite>();
         if (currentPlayer.Score.CurrentScore >= sat.GetValues().GetCost())
         {
             currentPlayer.Score.DecreaseScore(sat.GetValues().GetCost());
+            if (!GameRunning)
+                GameRunning = true;
         }
         else
         {
             Destroy(satelliteObject);
         }
+    }
+    public static bool EnableDecrease
+    {
+        get; set;
+    }
+    public static bool GameRunning
+    {
+        get { return _gameRunning; } set { _gameRunning = value; EnableDecrease = value; }
     }
 }
