@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -14,7 +15,12 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     PlayerInfoView playerInfoView;
 
+    public SatelliteChoserUI satelliteChoser;
+    [HideInInspector]
     public SatelliteChoserPanel lastSatelliteChoice;
+    public GameObject endScreen;
+
+    private Timer? gameTimer = null;
 
     public float noSatalliteDecreaseCost = 0.01f;
     private static bool _gameRunning;
@@ -32,7 +38,7 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         EnableDecrease = false;
-        currentPlayer = new Player(5000);
+        currentPlayer = new Player(220);
         launchPad.OnBoughtSatellite += BuySatellite;
     }
 
@@ -43,18 +49,26 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.R))
+            RestartGame();
         playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), lastSatelliteChoice);
         foreach(var m in population.GetAllMinions())
         { 
             currentPlayer.Score.AddScore(m.GetCurrentScore());
         }
-        if (population.ActivePlayerTransmitSatellites().Count <= 0)
+        if (_gameRunning && population.ActivePlayerTransmitSatellites().Count <= 0)
         {
             if (EnableDecrease)
                 currentPlayer.Score.DecreaseScore(noSatalliteDecreaseCost);
 
-            if (false)
+            var lost = !satelliteChoser.CanPayAnySatellite();
+            if (lost)
                 EndGame();
+        }
+
+        if (_gameRunning && gameTimer == null)
+        {
+            gameTimer = new Timer(0);
         }
     }
 
@@ -77,7 +91,12 @@ public class GameManager : MonoBehaviour {
     private void EndGame()
     {
         GameRunning = false;
-        //TODO Show end screen
+        endScreen.SetActive(true);
+        endScreen.GetComponent<EndScreen>().SetTime(TimeTheGameIsRunningInSeconds);
+    }
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public static bool EnableDecrease
     {
@@ -86,5 +105,13 @@ public class GameManager : MonoBehaviour {
     public static bool GameRunning
     {
         get { return _gameRunning; } set { _gameRunning = value; EnableDecrease = value; }
+    }
+
+    public float TimeTheGameIsRunningInSeconds
+    {
+        get
+        {
+            return gameTimer.HasValue ? gameTimer.Value.time : 0;
+        }
     }
 }
