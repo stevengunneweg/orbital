@@ -34,9 +34,20 @@ public class Attack : MonoBehaviour {
             float closestDistance = float.MaxValue;
             foreach (var collider in allColliders)
             {
-                // TODO check for friendly or enemy colliders
+                // Don't shoot at projectiles
+                if (LayerMask.LayerToName(collider.gameObject.layer).EndsWith("Projectiles"))
+                    continue;
 
+                // Don't shoot at the same team
+                if (collider.gameObject.layer == gameObject.layer)
+                    continue;
+
+                // Don't shoot at yourself
                 if (collider.transform == transform)
+                    continue;
+
+                // Dont shoot at the Earth
+                if (collider.transform.name == "EarthCollider")
                     continue;
 
                 var dist = (collider.transform.position - transform.position).magnitude;

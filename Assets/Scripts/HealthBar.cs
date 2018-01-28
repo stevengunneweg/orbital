@@ -12,7 +12,6 @@ public class HealthBar : MonoBehaviour {
     // Use this for initialization
     void Start () {
         health.OnValueChanged += OnHealthValueChanged;
-        gameObject.SetActive(false);
 	}
 
     private void OnDestroy()
@@ -23,10 +22,5 @@ public class HealthBar : MonoBehaviour {
     // Update is called once per frame
     void OnHealthValueChanged(float newValue, float maxValue) {
         healthBar.fillAmount = newValue / maxValue;
-
-        if (newValue == 0)
-            gameObject.SetActive(false);
-        else if (!gameObject.activeSelf)
-            gameObject.SetActive(true);
     }
 }

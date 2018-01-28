@@ -5,10 +5,12 @@ using UnityEngine;
 public class SatelliteChoserUI : MonoBehaviour {
 
 
+    private bool canPayAny;
     public GameManager gameManager;
 
     protected void Update()
     {
+        canPayAny = false;
         for (int i = 0; i < transform.childCount; i++)
         {
             var child = transform.GetChild(i);
@@ -20,6 +22,7 @@ public class SatelliteChoserUI : MonoBehaviour {
             if (panel.GetCostFromText() <= gameManager.GetCurrentScore())
             {
                 panel.ShowAsBuyable();
+                canPayAny = true;
             } else
             {
                 panel.ShowAsTooExpensive();
@@ -27,5 +30,9 @@ public class SatelliteChoserUI : MonoBehaviour {
         }
     }
 
+    public bool CanPayAnySatellite()
+    {
+        return canPayAny;
+    }
 
 }
