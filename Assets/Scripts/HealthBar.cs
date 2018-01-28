@@ -14,9 +14,14 @@ public class HealthBar : MonoBehaviour {
         health.OnValueChanged += OnHealthValueChanged;
         gameObject.SetActive(false);
 	}
-	
-	// Update is called once per frame
-	void OnHealthValueChanged(float newValue, float maxValue) {
+
+    private void OnDestroy()
+    {
+        health.OnValueChanged -= OnHealthValueChanged;
+    }
+
+    // Update is called once per frame
+    void OnHealthValueChanged(float newValue, float maxValue) {
         healthBar.fillAmount = newValue / maxValue;
 
         if (newValue == 0)

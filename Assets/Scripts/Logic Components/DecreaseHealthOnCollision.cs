@@ -7,7 +7,7 @@ public class DecreaseHealthOnCollision : MonoBehaviour {
     [SerializeField]
     Health health;
 
-    int decreaseHealth = 10;
+    int decreaseHealth = 50;
 
     public void SetHealthDecrease(int nr)
     {
@@ -15,6 +15,11 @@ public class DecreaseHealthOnCollision : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
+    {
+        health.DecreaseHealth(decreaseHealth);
+    }
+
+    private void OnCollisionEnter2D(Collider2D collision)
     {
         health.DecreaseHealth(decreaseHealth);
     }
