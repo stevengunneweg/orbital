@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Health))]
-public class Shielding : MonoBehaviour {
+public class Armored : MonoBehaviour {
 
     [SerializeField]
     int shieldValue = 50;
