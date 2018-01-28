@@ -15,7 +15,8 @@ public class MenuHandler : MonoBehaviour {
     {
         if (OnBuySattelite != null)
         {
-            OnBuySattelite(SateliteFactory.From(gameManager.currentSatelliteType));
+            var satelite = SateliteFactory.From(gameManager.lastSatelliteChoice.satelliteType);
+            OnBuySattelite(satelite.gameObject);
         }
     }
 }

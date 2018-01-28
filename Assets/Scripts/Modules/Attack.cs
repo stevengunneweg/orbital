@@ -8,6 +8,7 @@ public class Attack : MonoBehaviour {
     public float rotationSpeed = 1f;
     public float reloadDuration = 1f;
     public GameObject bulletPrefab;
+    GameObject axl;
 
     private Timer isReloading;
 
@@ -17,31 +18,74 @@ public class Attack : MonoBehaviour {
     {
         angle = Random.value * 360f;
         bulletParent = Hierarchy.GetComponentWithTag<BulletParent>();
-        isReloading = new Timer(reloadDuration);
+        isReloading = new Timer(reloadDuration);        
     }
 
+    int framesSinceLastShot = 0;
     protected void Update()
     {
-        // Turn gradually each step
-        angle += rotationSpeed * Time.deltaTime;
-
-        // Check wether reloading
-        if (!isReloading)
+        framesSinceLastShot++;
+        if (framesSinceLastShot > 30)
         {
-            // Reset reloading timer
-            isReloading = new Timer(reloadDuration);
+            RaycastHit2D hit;
+            if (hit = Physics2D.Raycast(transform.position + (new Vector3(1, 0, 0) * 0.25f), new Vector3(1, 0, 0)))
+            {
+                if (hit.transform != this.transform)
+                    Shoot(transform.position + (new Vector3(1, 0, 0) * 0.25f), new Vector3(1, 0, 0));
+            }
+            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(-1, 0, 0) * 0.25f), new Vector3(-1, 0, 0)))
+            {
+                if (hit.transform != this.transform)
+                    Shoot(transform.position + (new Vector3(-1, 0, 0) * 0.25f), new Vector3(-1, 0, 0));
+            }
+            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(0, 1, 0) * 0.25f), new Vector3(0, 1, 0)))
+            {
+                if (hit.transform != this.transform)
+                    Shoot(transform.position + (new Vector3(0, 1, 0) * 0.25f), new Vector3(0, 1, 0));
 
-            // Calculate the bullet direction
-            var bulletDirection = (Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up).normalized;
+            }
+            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(0, -1, 0) * 0.25f), new Vector3(0, -1, 0)))
+            {
+                if (hit.transform != this.transform)
+                    Shoot(transform.position + (new Vector3(0, -1, 0) * 0.25f), new Vector3(0, -1, 0));
+            }
 
-            // Create the bullet
-            var bulletInstance = Instantiate(bulletPrefab, transform.position + bulletDirection * 0.2f, Quaternion.identity, bulletParent.transform);
-            var bullet = bulletInstance.GetComponent<Bullet>();
+            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(1, 1, 0) * 0.25f), new Vector3(1, 1, 0)))
+            {
+                if (hit.transform != this.transform)
+                    Shoot(transform.position + (new Vector3(1, 1, 0) * 0.25f), new Vector3(1, 1, 0));
+            }
+            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(-1, 1, 0) * 0.25f), new Vector3(-1, 1, 0)))
+            {
+                if (hit.transform != this.transform)
+                    Shoot(transform.position + (new Vector3(-1, 1, 0) * 0.25f), new Vector3(-1, 1, 0));
+            }
+            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(1, -1, 0) * 0.25f), new Vector3(1, -1, 0)))
+            {
+                if (hit.transform != this.transform)
+                    Shoot(transform.position + (new Vector3(1, -1, 0) * 0.25f), new Vector3(1, -1, 0));
 
-            // Apply the bullet direction to the bullet
-            bullet.SetDirection(bulletDirection);
-            
+            }
+            else if (hit = Physics2D.Raycast(transform.position + (new Vector3(-1, -1, 0) * 0.25f), new Vector3(-1, -1, 0)))
+            {
+                if (hit.transform != this.transform)
+                    Shoot(transform.position + (new Vector3(-1, -1, 0) * 0.25f), new Vector3(-1, -1, 0));
+            }
         }
+        
+    }
+
+
+    private void Shoot(Vector3 position, Vector3 direction)
+    {
+        //Shoot
+        // Create the bullet
+        var bulletInstance = Instantiate(bulletPrefab, position, Quaternion.identity, bulletParent.transform);
+        var bullet = bulletInstance.GetComponent<Bullet>();
+
+        // Apply the bullet direction to the bullet
+        bullet.SetDirection(direction);
+        framesSinceLastShot = 0;
     }
 
 }

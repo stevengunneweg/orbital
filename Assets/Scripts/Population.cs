@@ -11,8 +11,6 @@ public class Population : MonoBehaviour {
     [SerializeField]
     private List<SignalTransmitter> signalTransmitters;
     private List<Satelite> satelites;
-
-
     private void Awake()
     {
         signalTransmitters = new List<SignalTransmitter>();
@@ -81,5 +79,10 @@ public class Population : MonoBehaviour {
     public int NrOfSatellites()
     {
         return ActivePlayerSatellites().Count;
+    }
+
+    public List<Satelite> GetAllSatelites()
+    {
+        return satelites;
     }
 }

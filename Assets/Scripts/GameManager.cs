@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,32 +14,21 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     PlayerInfoView playerInfoView;
 
-    public SateliteFactory.SatelliteType currentSatelliteType;
-    public float currentSatelliteCost = 125;
+    public SatelliteChoserPanel lastSatelliteChoice;
 
-    public void ChangeToDefensiveSatellite()
+    public void SetLastSatelliteChoice(SatelliteChoserPanel lastSatelliteChoice)
     {
-        currentSatelliteType = SateliteFactory.SatelliteType.Defense;
+        this.lastSatelliteChoice = lastSatelliteChoice;
     }
 
-    public void ChangeToSelfRepairingSatellite()
+    public float GetCurrentScore()
     {
-        currentSatelliteType = SateliteFactory.SatelliteType.SelfRepairing;
-    }
-
-    public void ChangeToTransmissionSatellite()
-    {
-        currentSatelliteType = SateliteFactory.SatelliteType.Transmit;
-    }
-
-    public void ChangeToRailgunSatellite()
-    {
-        currentSatelliteType = SateliteFactory.SatelliteType.Attack;
+        return currentPlayer.Score.CurrentScore;
     }
 
     private void Start()
     {
-        currentPlayer = new Player(150);
+        currentPlayer = new Player(5000);
         launchPad.OnBoughtSatellite += BuySatellite;
     }
 
@@ -49,7 +39,7 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), currentSatelliteType.ToString(), currentSatelliteCost);
+        playerInfoView.DrawInfo((int)currentPlayer.Score.CurrentScore, population.NrOfSatellites(), lastSatelliteChoice.shortName, lastSatelliteChoice.GetCostFromText());
         foreach(var m in population.GetAllMinions())
         { 
             currentPlayer.Score.AddScore(m.GetCurrentScore());
