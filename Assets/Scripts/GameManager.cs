@@ -52,6 +52,9 @@ public class GameManager : MonoBehaviour {
         {
             if (EnableDecrease)
                 currentPlayer.Score.DecreaseScore(noSatalliteDecreaseCost);
+
+            if (false)
+                EndGame();
         }
     }
 
@@ -68,6 +71,11 @@ public class GameManager : MonoBehaviour {
         {
             Destroy(satelliteObject);
         }
+    }
+    private void EndGame()
+    {
+        GameRunning = false;
+        //TODO Show end screen
     }
     public static bool EnableDecrease
     {
