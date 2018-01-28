@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SatelliteChoserUI : MonoBehaviour {
 
 
     private bool canPayAny;
     public GameManager gameManager;
+
+    public TextMeshProUGUI timeText;
 
     protected void Update()
     {
@@ -27,6 +30,15 @@ public class SatelliteChoserUI : MonoBehaviour {
             {
                 panel.ShowAsTooExpensive();
             }
+        }
+
+        if (!gameManager.endScreen.activeSelf)
+        {
+            var totalSeconds = gameManager.TimeTheGameIsRunningInSeconds;
+            int numberOfSmallTimeUnitsInOneLargeTimeUnit = 53;
+            var smallTimeUnit = Mathf.Floor(totalSeconds % numberOfSmallTimeUnitsInOneLargeTimeUnit);
+            var largeTimeUnit = Mathf.Floor(totalSeconds / numberOfSmallTimeUnitsInOneLargeTimeUnit);
+            timeText.text = largeTimeUnit + " year" + (largeTimeUnit == 1 ? "" : "s") + ", " + smallTimeUnit + " week" + (smallTimeUnit == 1 ? "" : "s");
         }
     }
 
