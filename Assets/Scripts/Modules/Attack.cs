@@ -39,6 +39,9 @@ public class Attack : MonoBehaviour {
                 if (collider.transform == transform)
                     continue;
 
+                if (collider.transform.name == "EarthCollider")
+                    continue;
+
                 var dist = (collider.transform.position - transform.position).magnitude;
                 if (dist < closestDistance)
                 {

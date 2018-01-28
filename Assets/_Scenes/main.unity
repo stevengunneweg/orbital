@@ -3245,7 +3245,7 @@ GameObject:
   - component: {fileID: 1453685044}
   - component: {fileID: 1453685045}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: EarthCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3523,7 +3523,7 @@ MonoBehaviour:
   population: {fileID: 1531593531}
   launchPad: {fileID: 1647635519}
   playerInfoView: {fileID: 414976772}
-  lastSatelliteChoice: {fileID: 1359921253}
+  lastSatelliteChoice: {fileID: 0}
   noSatalliteDecreaseCost: 0.01
 --- !u!4 &1531593530
 Transform:
@@ -3946,7 +3946,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1647635516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0010469854, y: 3.450306, z: -0.85}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
