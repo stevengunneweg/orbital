@@ -17,8 +17,8 @@ TagManager:
   - 
   - Player
   - Enemy
-  - Player_Bullets
-  - Enemy_Bullets
+  - Player_Projectiles
+  - Enemy_Projectiles
   - 
   - 
   - 
@@ -42,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: HealthBars
+    uniqueID: 281138953
     locked: 0

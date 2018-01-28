@@ -10,8 +10,6 @@ public class Attack : MonoBehaviour {
     public float reloadDuration = 1f;
     public GameObject bulletPrefab;
 
-    private bool isPlayer { get { return satelite.IsPlayer; } }
-
     private Timer isReloading;
 
     private BulletParent bulletParent;
@@ -42,7 +40,7 @@ public class Attack : MonoBehaviour {
             // Create the bullet
             var bulletInstance = Instantiate(bulletPrefab, transform.position + bulletDirection * 0.2f, Quaternion.identity, bulletParent.transform);
             var bullet = bulletInstance.GetComponent<Bullet>();
-            bullet.isPlayer = isPlayer;
+            bullet.isPlayer = satelite.IsPlayer;
 
             // Apply the bullet direction to the bullet
             bullet.SetDirection(bulletDirection);
