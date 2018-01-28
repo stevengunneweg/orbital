@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour {
         endScreen.SetActive(true);
         endScreen.GetComponent<EndScreen>().SetTime(TimeTheGameIsRunningInSeconds);
     }
-    private void RestartGame()
+    public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
